@@ -1,0 +1,13 @@
+{
+  "name": "M0RX Dev",
+  "image": "mcr.microsoft.com/devcontainers/rust:latest",
+  "postCreateCommand": "rustup component add rustfmt clippy",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml"
+      ]
+    }
+  }
+}
