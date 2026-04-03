@@ -1,0 +1,44 @@
+// M0RX Standard Library - Web
+
+// ===== HTTP Server =====
+fn serverCreate(port: ant) -> any { }
+fn serverStart(server: any) -> nil { }
+fn serverStop(server: any) -> nil { }
+fn serverRoute(server: any, method: str, path: str, fn: any) -> nil { }
+fn serverMiddleware(server: any, fn: any) -> nil { }
+fn serverStatic(server: any, path: str, dir: str) -> nil { }
+
+// ===== Request =====
+fn reqBody(req: any) -> any { }
+fn reqHeaders(req: any) -> map { }
+fn reqParams(req: any) -> map { }
+fn reqQuery(req: any) -> map { }
+fn reqMethod(req: any) -> str { }
+fn reqPath(req: any) -> str { }
+fn reqIp(req: any) -> str { }
+fn reqCookies(req: any) -> map { }
+
+// ===== Response =====
+fn resSend(res: any, body: any) -> nil { }
+fn resJson(res: any, data: any) -> nil { }
+fn resStatus(res: any, code: ant) -> any { }
+fn resHeader(res: any, key: str, val: str) -> nil { }
+fn resRedirect(res: any, url: str) -> nil { }
+fn resCookie(res: any, name: str, val: str) -> nil { }
+fn resFile(res: any, path: str) -> nil { }
+
+// ===== Scraper =====
+fn scrapeUrl(url: str) -> str { }
+fn scrapeSelect(html: str, selector: str) -> list { }
+fn scrapeText(html: str, selector: str) -> str { }
+fn scrapeAttr(html: str, selector: str, attr: str) -> str { }
+fn scrapeLinks(html: str) -> list { }
+fn scrapeImages(html: str) -> list { }
+
+// ===== HTML Parser =====
+fn htmlParse(html: str) -> any { }
+fn htmlFind(doc: any, selector: str) -> list { }
+fn htmlText(node: any) -> str { }
+fn htmlAttr(node: any, attr: str) -> str { }
+fn htmlChildren(node: any) -> list { }
+fn htmlBuild(tag: str, attrs: map, children: list) -> str { }

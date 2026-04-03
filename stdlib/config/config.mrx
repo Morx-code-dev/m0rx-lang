@@ -1,0 +1,21 @@
+// M0RX Standard Library - Config
+
+// ===== Load Config =====
+fn configLoad(path: str) -> map { }
+fn configLoadEnv() -> map { }
+fn configLoadYaml(path: str) -> map { }
+fn configLoadToml(path: str) -> map { }
+fn configLoadJson(path: str) -> map { }
+
+// ===== Get Values =====
+fn configGet(cfg: map, key: str) -> any { }
+fn configGetStr(cfg: map, key: str, default: str) -> str { }
+fn configGetInt(cfg: map, key: str, default: ant) -> ant { }
+fn configGetBool(cfg: map, key: str, default: bool) -> bool { }
+fn configGetList(cfg: map, key: str) -> list { }
+
+// ===== Set Values =====
+fn configSet(cfg: map, key: str, value: any) -> nil { }
+fn configSave(cfg: map, path: str) -> bool { }
+fn configMerge(base: map, override: map) -> map { }
+fn configValidate(cfg: map, schema: map) -> bool { }

@@ -1,0 +1,51 @@
+// M0RX Standard Library - Database
+
+// ===== Connection =====
+fn dbConnect(url: str) -> any { }
+fn dbClose(conn: any) -> nil { }
+fn dbPing(conn: any) -> bool { }
+fn dbTransaction(conn: any, fn: any) -> any { }
+
+// ===== SQL Queries =====
+fn dbQuery(conn: any, sql: str, params: list) -> list { }
+fn dbQueryOne(conn: any, sql: str, params: list) -> map { }
+fn dbExec(conn: any, sql: str, params: list) -> ant { }
+fn dbInsert(conn: any, table: str, data: map) -> any { }
+fn dbUpdate(conn: any, table: str, data: map, where: map) -> ant { }
+fn dbDelete(conn: any, table: str, where: map) -> ant { }
+fn dbSelect(conn: any, table: str, where: map) -> list { }
+
+// ===== Query Builder =====
+fn queryFrom(table: str) -> any { }
+fn queryWhere(q: any, cond: str, params: list) -> any { }
+fn querySelect(q: any, cols: list) -> any { }
+fn queryOrderBy(q: any, col: str, dir: str) -> any { }
+fn queryLimit(q: any, n: ant) -> any { }
+fn queryOffset(q: any, n: ant) -> any { }
+fn queryJoin(q: any, table: str, on: str) -> any { }
+fn queryRun(q: any, conn: any) -> list { }
+
+// ===== Schema / Migrations =====
+fn dbCreateTable(conn: any, name: str, cols: map) -> bool { }
+fn dbDropTable(conn: any, name: str) -> bool { }
+fn dbAddColumn(conn: any, table: str, col: str, type: str) -> bool { }
+fn dbDropColumn(conn: any, table: str, col: str) -> bool { }
+fn dbCreateIndex(conn: any, table: str, col: str) -> bool { }
+fn dbMigrate(conn: any, migrations: list) -> bool { }
+
+// ===== NoSQL =====
+fn nosqlConnect(url: str) -> any { }
+fn nosqlGet(conn: any, key: str) -> any { }
+fn nosqlSet(conn: any, key: str, value: any) -> bool { }
+fn nosqlDelete(conn: any, key: str) -> bool { }
+fn nosqlFind(conn: any, collection: str, query: map) -> list { }
+fn nosqlInsertDoc(conn: any, collection: str, doc: map) -> str { }
+fn nosqlUpdateDoc(conn: any, collection: str, id: str, doc: map) -> bool { }
+fn nosqlDeleteDoc(conn: any, collection: str, id: str) -> bool { }
+
+// ===== Vector DB =====
+fn vecConnect(url: str) -> any { }
+fn vecUpsert(conn: any, id: str, vector: list, meta: map) -> bool { }
+fn vecSearch(conn: any, vector: list, topK: ant) -> list { }
+fn vecDelete(conn: any, id: str) -> bool { }
+fn vecCreateIndex(conn: any, name: str, dims: ant) -> bool { }

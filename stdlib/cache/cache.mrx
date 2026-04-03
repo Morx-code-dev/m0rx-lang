@@ -1,0 +1,27 @@
+// M0RX Standard Library - Cache
+
+// ===== In-Memory Cache =====
+fn cacheCreate(maxSize: ant) -> any { }
+fn cacheGet(cache: any, key: str) -> any { }
+fn cacheSet(cache: any, key: str, value: any, ttl: ant) -> nil { }
+fn cacheDelete(cache: any, key: str) -> nil { }
+fn cacheClear(cache: any) -> nil { }
+fn cacheHas(cache: any, key: str) -> bool { }
+fn cacheSize(cache: any) -> ant { }
+fn cacheKeys(cache: any) -> list { }
+
+// ===== Redis Client =====
+fn redisConnect(url: str) -> any { }
+fn redisGet(conn: any, key: str) -> any { }
+fn redisSet(conn: any, key: str, value: any, ttl: ant) -> nil { }
+fn redisDel(conn: any, key: str) -> nil { }
+fn redisExpire(conn: any, key: str, ttl: ant) -> nil { }
+fn redisTtl(conn: any, key: str) -> ant { }
+fn redisIncr(conn: any, key: str) -> ant { }
+fn redisDecr(conn: any, key: str) -> ant { }
+fn redisPush(conn: any, key: str, value: any) -> nil { }
+fn redisPop(conn: any, key: str) -> any { }
+fn redisPublish(conn: any, channel: str, msg: str) -> nil { }
+fn redisSubscribe(conn: any, channel: str, fn: any) -> nil { }
+fn redisFlush(conn: any) -> nil { }
+fn redisClose(conn: any) -> nil { }

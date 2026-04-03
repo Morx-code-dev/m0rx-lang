@@ -1,0 +1,55 @@
+// M0RX Standard Library - Security
+
+// ===== Hashing =====
+fn hashMd5(data: str) -> str { }
+fn hashSha1(data: str) -> str { }
+fn hashSha256(data: str) -> str { }
+fn hashSha512(data: str) -> str { }
+fn hashBcrypt(password: str, rounds: ant) -> str { }
+fn hashVerify(password: str, hash: str) -> bool { }
+fn hashHmac(data: str, key: str) -> str { }
+
+// ===== Encryption =====
+fn aesEncrypt(data: blob, key: blob) -> blob { }
+fn aesDecrypt(data: blob, key: blob) -> blob { }
+fn rsaGenKeys(bits: ant) -> map { }
+fn rsaEncrypt(data: blob, pubKey: str) -> blob { }
+fn rsaDecrypt(data: blob, privKey: str) -> blob { }
+fn rsaSign(data: blob, privKey: str) -> blob { }
+fn rsaVerify(data: blob, sig: blob, pubKey: str) -> bool { }
+
+// ===== JWT =====
+fn jwtCreate(payload: map, secret: str, expiry: ant) -> str { }
+fn jwtVerify(token: str, secret: str) -> map { }
+fn jwtDecode(token: str) -> map { }
+fn jwtRefresh(token: str, secret: str) -> str { }
+
+// ===== OAuth2 =====
+fn oauthCreate(config: map) -> any { }
+fn oauthGetUrl(client: any, scopes: list) -> str { }
+fn oauthExchange(client: any, code: str) -> map { }
+fn oauthRefresh(client: any, token: str) -> map { }
+
+// ===== TLS =====
+fn tlsCreate(cert: str, key: str) -> any { }
+fn tlsVerify(cert: str) -> bool { }
+fn tlsFingerprint(cert: str) -> str { }
+
+// ===== Random =====
+fn secureRandom(bytes: ant) -> blob { }
+fn secureToken(length: ant) -> str { }
+fn secureUuid() -> str { }
+fn secureOtp(length: ant) -> str { }
+
+// ===== Input Sanitize =====
+fn sanitizeHtml(input: str) -> str { }
+fn sanitizeSql(input: str) -> str { }
+fn sanitizeUrl(input: str) -> str { }
+fn validateEmail(input: str) -> bool { }
+fn validateUrl(input: str) -> bool { }
+fn validateIp(input: str) -> bool { }
+
+// ===== Rate Limit =====
+fn rateLimitCreate(max: ant, window: ant) -> any { }
+fn rateLimitCheck(limiter: any, key: str) -> bool { }
+fn rateLimitReset(limiter: any, key: str) -> nil { }

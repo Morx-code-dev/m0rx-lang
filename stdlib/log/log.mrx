@@ -1,0 +1,20 @@
+// M0RX Standard Library - Logging
+
+// ===== Logger =====
+fn logCreate(name: str) -> any { }
+fn logInfo(logger: any, msg: str) -> nil { }
+fn logWarn(logger: any, msg: str) -> nil { }
+fn logError(logger: any, msg: str) -> nil { }
+fn logDebug(logger: any, msg: str) -> nil { }
+fn logFatal(logger: any, msg: str) -> nil { }
+fn logSetLevel(logger: any, level: str) -> nil { }
+fn logToFile(logger: any, path: str) -> nil { }
+fn logRotate(logger: any, maxSize: ant) -> nil { }
+fn logJson(logger: any, data: map) -> nil { }
+fn logWithFields(logger: any, fields: map, msg: str) -> nil { }
+
+// ===== Global Log =====
+fn info(msg: str) -> nil { }
+fn warn(msg: str) -> nil { }
+fn error(msg: str) -> nil { }
+fn fatal(msg: str) -> nil { }
