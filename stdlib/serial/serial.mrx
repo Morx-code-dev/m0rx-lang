@@ -1,0 +1,38 @@
+// M0RX Standard Library - Serialization
+
+// ===== JSON =====
+fn jsonParse(s: str) -> any { }
+fn jsonStringify(value: any) -> str { }
+fn jsonPretty(value: any) -> str { }
+fn jsonValidate(s: str) -> bool { }
+fn jsonGet(obj: any, path: str) -> any { }
+fn jsonSet(obj: any, path: str, val: any) -> any { }
+
+// ===== YAML =====
+fn yamlParse(s: str) -> any { }
+fn yamlStringify(value: any) -> str { }
+
+// ===== TOML =====
+fn tomlParse(s: str) -> any { }
+fn tomlStringify(value: any) -> str { }
+
+// ===== XML =====
+fn xmlParse(s: str) -> any { }
+fn xmlStringify(value: any) -> str { }
+fn xmlGet(doc: any, path: str) -> any { }
+
+// ===== CSV =====
+fn csvParse(s: str, delimiter: chr) -> list { }
+fn csvStringify(data: list, delimiter: chr) -> str { }
+
+// ===== MessagePack =====
+fn msgpackEncode(value: any) -> blob { }
+fn msgpackDecode(data: blob) -> any { }
+
+// ===== Compress =====
+fn gzipCompress(data: blob) -> blob { }
+fn gzipDecompress(data: blob) -> blob { }
+fn zipCreate(path: str, files: list) -> bool { }
+fn zipExtract(path: str, dest: str) -> bool { }
+fn zstdCompress(data: blob) -> blob { }
+fn zstdDecompress(data: blob) -> blob { }

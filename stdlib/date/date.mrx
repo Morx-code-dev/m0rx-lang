@@ -1,0 +1,36 @@
+// M0RX Standard Library - Date & Time
+
+// ===== Current Time =====
+fn nowMs() -> long { }
+fn nowSec() -> long { }
+fn nowDate() -> map { }
+fn nowTime() -> map { }
+fn nowDatetime() -> map { }
+fn timezone() -> str { }
+
+// ===== Create Date =====
+fn dateCreate(year: ant, month: ant, day: ant) -> map { }
+fn timeCreate(hour: ant, min: ant, sec: ant) -> map { }
+fn datetimeCreate(year: ant, month: ant, day: ant, hour: ant, min: ant, sec: ant) -> map { }
+
+// ===== Format =====
+fn dateFormat(date: map, fmt: str) -> str { }
+fn dateParse(s: str, fmt: str) -> map { }
+fn dateToIso(date: map) -> str { }
+fn dateFromIso(s: str) -> map { }
+fn dateToUnix(date: map) -> long { }
+fn dateFromUnix(ts: long) -> map { }
+
+// ===== Operations =====
+fn dateAdd(date: map, days: ant) -> map { }
+fn dateSub(date: map, days: ant) -> map { }
+fn dateDiff(a: map, b: map) -> ant { }
+fn dateCompare(a: map, b: map) -> ant { }
+fn dateIsLeap(year: ant) -> bool { }
+fn daysInMonth(year: ant, month: ant) -> ant { }
+
+// ===== Calendar =====
+fn weekday(date: map) -> str { }
+fn weekNumber(date: map) -> ant { }
+fn quarter(date: map) -> ant { }
+fn isWeekend(date: map) -> bool { }

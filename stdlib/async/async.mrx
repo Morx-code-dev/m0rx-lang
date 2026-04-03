@@ -1,0 +1,33 @@
+// M0RX Standard Library - Async Runtime
+
+// ===== Tasks =====
+fn taskSpawn(fn: any) -> any { }
+fn taskAwait(task: any) -> any { }
+fn taskAwaitAll(tasks: list) -> list { }
+fn taskAwaitAny(tasks: list) -> any { }
+fn taskCancel(task: any) -> nil { }
+fn taskTimeout(ms: ant, fn: any) -> any { }
+fn taskRetry(times: ant, fn: any) -> any { }
+fn taskDelay(ms: ant) -> any { }
+
+// ===== Channels =====
+fn chanCreate() -> any { }
+fn chanSend(ch: any, value: any) -> nil { }
+fn chanReceive(ch: any) -> any { }
+fn chanClose(ch: any) -> nil { }
+fn chanSelect(channels: list) -> any { }
+
+// ===== Event Loop =====
+fn loopRun(fn: any) -> nil { }
+fn loopStop() -> nil { }
+fn loopOnce() -> nil { }
+fn setTimer(ms: ant, fn: any) -> any { }
+fn clearTimer(timer: any) -> nil { }
+fn setInterval(ms: ant, fn: any) -> any { }
+fn clearInterval(timer: any) -> nil { }
+
+// ===== Coroutines =====
+fn coCreate(fn: any) -> any { }
+fn coResume(co: any, value: any) -> any { }
+fn coYield(value: any) -> any { }
+fn coStatus(co: any) -> str { }

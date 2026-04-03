@@ -1,0 +1,37 @@
+// M0RX Standard Library - Network
+
+// ===== HTTP Client =====
+fn httpGet(url: str, headers: map) -> map { }
+fn httpPost(url: str, body: any, headers: map) -> map { }
+fn httpPut(url: str, body: any, headers: map) -> map { }
+fn httpPatch(url: str, body: any, headers: map) -> map { }
+fn httpDelete(url: str, headers: map) -> map { }
+fn httpUpload(url: str, file: str, headers: map) -> map { }
+fn httpDownload(url: str, path: str) -> bool { }
+
+// ===== TCP =====
+fn tcpConnect(host: str, port: ant) -> any { }
+fn tcpListen(port: ant, fn: any) -> any { }
+fn tcpSend(conn: any, data: blob) -> ant { }
+fn tcpReceive(conn: any, size: ant) -> blob { }
+fn tcpClose(conn: any) -> nil { }
+
+// ===== UDP =====
+fn udpBind(port: ant) -> any { }
+fn udpSend(sock: any, host: str, port: ant, data: blob) -> nil { }
+fn udpReceive(sock: any) -> map { }
+fn udpClose(sock: any) -> nil { }
+
+// ===== DNS =====
+fn dnsLookup(host: str) -> list { }
+fn dnsReverse(ip: str) -> str { }
+
+// ===== WebSocket =====
+fn wsConnect(url: str) -> any { }
+fn wsSend(conn: any, msg: str) -> nil { }
+fn wsOnMessage(conn: any, fn: any) -> nil { }
+fn wsClose(conn: any) -> nil { }
+
+// ===== Proxy =====
+fn setProxy(host: str, port: ant) -> nil { }
+fn clearProxy() -> nil { }

@@ -1,0 +1,42 @@
+// M0RX Standard Library - System
+
+// ===== OS Interface =====
+fn osName() -> str { }
+fn osVersion() -> str { }
+fn osArch() -> str { }
+fn hostname() -> str { }
+fn username() -> str { }
+fn homeDir() -> str { }
+fn currentDir() -> str { }
+fn changeDir(path: str) -> bool { }
+fn listDir(path: str) -> list { }
+fn makeDir(path: str) -> bool { }
+fn removeDir(path: str) -> bool { }
+fn pathExists(path: str) -> bool { }
+fn absPath(path: str) -> str { }
+fn joinPath(parts: list) -> str { }
+
+// ===== Process =====
+fn runCmd(cmd: str) -> str { }
+fn runCmdAsync(cmd: str) -> any { }
+fn killProcess(pid: ant) -> bool { }
+fn processInfo(pid: ant) -> map { }
+fn listProcesses() -> list { }
+fn cpuUsage() -> dbl { }
+fn memUsage() -> map { }
+fn diskUsage(path: str) -> map { }
+
+// ===== Signals =====
+fn onSignal(sig: str, fn: any) -> nil { }
+fn sendSignal(pid: ant, sig: str) -> bool { }
+
+// ===== Memory =====
+fn allocate(size: ant) -> blob { }
+fn deallocate(ptr: blob) -> nil { }
+fn memCopy(src: blob, dst: blob, size: ant) -> nil { }
+fn memSet(ptr: blob, val: ant, size: ant) -> nil { }
+
+// ===== Environment =====
+fn setEnv(key: str, val: str) -> nil { }
+fn getAllEnv() -> map { }
+fn unsetEnv(key: str) -> nil { }
