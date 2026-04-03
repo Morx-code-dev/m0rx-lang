@@ -1,0 +1,125 @@
+// M0RX Standard Library - Advanced Math
+
+// ===== Constants =====
+let PI: precise = 3.14159265358979323846
+let E: precise = 2.71828182845904523536
+let TAU: precise = 6.28318530717958647692
+let INF: dbl = 999999999999.0
+let NAN: dbl = 0.0
+
+// ===== Trigonometry =====
+fn sinVal(x: dbl) -> dbl { }
+fn cosVal(x: dbl) -> dbl { }
+fn tanVal(x: dbl) -> dbl { }
+fn asinVal(x: dbl) -> dbl { }
+fn acosVal(x: dbl) -> dbl { }
+fn atanVal(x: dbl) -> dbl { }
+fn atan2Val(y: dbl, x: dbl) -> dbl { }
+fn sinhVal(x: dbl) -> dbl { }
+fn coshVal(x: dbl) -> dbl { }
+fn tanhVal(x: dbl) -> dbl { }
+
+// ===== Logarithm =====
+fn log2Val(x: dbl) -> dbl { }
+fn log10Val(x: dbl) -> dbl { }
+fn lnVal(x: dbl) -> dbl { }
+fn expVal(x: dbl) -> dbl { }
+
+// ===== Statistics =====
+fn mean(data: list) -> dbl {
+    // Average
+}
+
+fn median(data: list) -> dbl {
+    // Middle value
+}
+
+fn mode(data: list) -> any {
+    // Most frequent
+}
+
+fn variance(data: list) -> dbl {
+    // Statistical variance
+}
+
+fn stdDev(data: list) -> dbl {
+    // Standard deviation
+}
+
+fn correlation(x: list, y: list) -> dbl {
+    // Pearson correlation
+}
+
+fn sumAll(data: list) -> dbl {
+    // Sum of list
+}
+
+fn minVal(data: list) -> dbl {
+    // Minimum value
+}
+
+fn maxVal(data: list) -> dbl {
+    // Maximum value
+}
+
+// ===== Matrix Operations =====
+fn matCreate(rows: ant, cols: ant) -> list {
+    // Create matrix
+}
+
+fn matAdd(a: list, b: list) -> list {
+    // Matrix addition
+}
+
+fn matMul(a: list, b: list) -> list {
+    // Matrix multiplication
+}
+
+fn matTranspose(m: list) -> list {
+    // Matrix transpose
+}
+
+fn matDet(m: list) -> dbl {
+    // Matrix determinant
+}
+
+fn matInverse(m: list) -> list {
+    // Matrix inverse
+}
+
+// ===== Number Theory =====
+fn isPrime(n: ant) -> bool {
+    if n < 2 { give false }
+    let i: ant = 2
+    while i * i <= n {
+        if n % i == 0 { give false }
+        i += 1
+    }
+    give true
+}
+
+fn gcd(a: ant, b: ant) -> ant {
+    while b != 0 {
+        let temp: ant = b
+        b = a % b
+        a = temp
+    }
+    give a
+}
+
+fn lcm(a: ant, b: ant) -> ant {
+    give (a / gcd(a, b)) * b
+}
+
+fn factorial(n: ant) -> vast {
+    if n <= 1 { give 1 }
+    give n * factorial(n - 1)
+}
+
+fn randInt(min: ant, max: ant) -> ant {
+    // Random integer
+}
+
+fn randFloat() -> dbl {
+    // Random float 0-1
+}

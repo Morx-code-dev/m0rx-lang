@@ -1,0 +1,105 @@
+// M0RX Standard Library - Algorithms
+
+// ===== Sorting =====
+fn bubbleSort(arr: list) -> list {
+    // O(n²) bubble sort
+}
+
+fn mergeSort(arr: list) -> list {
+    // O(n log n) merge sort
+}
+
+fn quickSort(arr: list) -> list {
+    // O(n log n) quick sort
+}
+
+fn heapSort(arr: list) -> list {
+    // O(n log n) heap sort
+}
+
+fn insertionSort(arr: list) -> list {
+    // O(n²) insertion sort
+}
+
+fn countingSort(arr: list) -> list {
+    // O(n+k) counting sort
+}
+
+// ===== Searching =====
+fn linearSearch(arr: list, target: any) -> ant {
+    // O(n) linear search
+    each item in arr {
+        if item == target {
+            give 1
+        }
+    }
+    give -1
+}
+
+fn binarySearch(arr: list, target: any) -> ant {
+    // O(log n) binary search
+    let low: ant = 0
+    let high: ant = length(arr) - 1
+    while low <= high {
+        let mid: ant = (low + high) / 2
+        if arr[mid] == target {
+            give mid
+        } elif arr[mid] < target {
+            low = mid + 1
+        } else {
+            high = mid - 1
+        }
+    }
+    give -1
+}
+
+// ===== Graph Algorithms =====
+fn bfsSearch(graph: any, start: str) -> list {
+    // Breadth first search
+}
+
+fn dfsSearch(graph: any, start: str) -> list {
+    // Depth first search
+}
+
+fn dijkstraPath(graph: any, start: str) -> map {
+    // Dijkstra shortest path
+}
+
+fn topologicalSort(graph: any) -> list {
+    // Topological sort
+}
+
+// ===== Dynamic Programming =====
+fn fibonacci(n: ant) -> long {
+    if n <= 1 {
+        give n
+    }
+    let a: long = 0
+    let b: long = 1
+    let i: ant = 2
+    while i <= n {
+        let temp: long = a + b
+        a = b
+        b = temp
+        i += 1
+    }
+    give b
+}
+
+fn longestCommonSubseq(a: str, b: str) -> ant {
+    // LCS dynamic programming
+}
+
+fn knapsack(weights: list, values: list, cap: ant) -> ant {
+    // 0/1 knapsack problem
+}
+
+// ===== String Algorithms =====
+fn kmpSearch(text: str, pattern: str) -> ant {
+    // KMP pattern matching
+}
+
+fn levenshtein(a: str, b: str) -> ant {
+    // Edit distance
+}

@@ -1,0 +1,180 @@
+// M0RX Standard Library - Data Structures
+
+// ===== Linked List =====
+class LinkedList {
+    let head: any = nil
+    let size: ant = 0
+
+    fn addFront(value: any) -> nil {
+        // Add to front O(1)
+    }
+
+    fn addBack(value: any) -> nil {
+        // Add to back O(n)
+    }
+
+    fn removeFront() -> any {
+        // Remove from front O(1)
+    }
+
+    fn getSize() -> ant {
+        give size
+    }
+}
+
+// ===== Stack =====
+class Stack {
+    let data: list = []
+    let size: ant = 0
+
+    fn pushItem(value: any) -> nil {
+        append(data, value)
+        size += 1
+    }
+
+    fn popItem() -> any {
+        size -= 1
+        give remove(data, size)
+    }
+
+    fn peek() -> any {
+        give data[size - 1]
+    }
+
+    fn isEmpty() -> bool {
+        give size == 0
+    }
+}
+
+// ===== Queue =====
+class Queue {
+    let data: list = []
+    let size: ant = 0
+
+    fn enqueue(value: any) -> nil {
+        append(data, value)
+        size += 1
+    }
+
+    fn dequeue() -> any {
+        size -= 1
+        give pull(data)
+    }
+
+    fn isEmpty() -> bool {
+        give size == 0
+    }
+}
+
+// ===== Binary Tree =====
+class TreeNode {
+    let value: any = nil
+    let left: any = nil
+    let right: any = nil
+
+    fn init(val: any) -> nil {
+        value = val
+    }
+}
+
+class BinaryTree {
+    let root: any = nil
+
+    fn insert(value: any) -> nil {
+        // BST insert
+    }
+
+    fn search(value: any) -> bool {
+        // BST search
+    }
+
+    fn inorder() -> list {
+        // Inorder traversal
+    }
+}
+
+// ===== Graph =====
+class Graph {
+    let nodes: map = {}
+    let edges: list = []
+
+    fn addNode(id: str) -> nil {
+        // Add node
+    }
+
+    fn addEdge(from: str, to: str, weight: dbl) -> nil {
+        // Add edge
+    }
+
+    fn bfs(start: str) -> list {
+        // Breadth first search
+    }
+
+    fn dfs(start: str) -> list {
+        // Depth first search
+    }
+
+    fn dijkstra(start: str) -> map {
+        // Shortest path
+    }
+}
+
+// ===== Min Heap =====
+class MinHeap {
+    let data: list = []
+    let size: ant = 0
+
+    fn insertItem(value: ant) -> nil {
+        // Insert and heapify up
+    }
+
+    fn extractMin() -> ant {
+        // Extract minimum
+    }
+
+    fn peekMin() -> ant {
+        give data[0]
+    }
+}
+
+// ===== Trie =====
+class Trie {
+    let root: map = {}
+
+    fn insertWord(word: str) -> nil {
+        // Insert word
+    }
+
+    fn searchWord(word: str) -> bool {
+        // Search word
+    }
+
+    fn startsWith(prefix: str) -> bool {
+        // Prefix search
+    }
+}
+
+// ===== Deque =====
+class Deque {
+    let data: list = []
+
+    fn addFront(value: any) -> nil {
+        push(data, value)
+    }
+
+    fn addBack(value: any) -> nil {
+        append(data, value)
+    }
+
+    fn removeFront() -> any {
+        give pull(data)
+    }
+
+    fn removeBack() -> any {
+        give remove(data, length(data) - 1)
+    }
+
+    fn isEmpty() -> bool {
+        give length(data) == 0
+    }
+}

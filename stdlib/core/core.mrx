@@ -1,0 +1,258 @@
+// M0RX Standard Library - Core
+// Built-in functions implementation
+
+// ===== I/O Functions =====
+fn show(value: any) -> nil {
+    // Print without newline
+}
+
+fn showln(value: any) -> nil {
+    // Print with newline
+}
+
+fn ask(prompt: str) -> str {
+    // Read user input with prompt
+}
+
+fn readline() -> str {
+    // Read line from stdin
+}
+
+fn emit(value: any) -> nil {
+    // Write to output stream
+}
+
+fn emitln(value: any) -> nil {
+    // Write line to output stream
+}
+
+fn flush() -> nil {
+    // Flush output buffer
+}
+
+fn wipe() -> nil {
+    // Clear terminal screen
+}
+
+// ===== Type Conversion =====
+fn asInt(value: any) -> ant {
+    // Convert to integer
+}
+
+fn asFloat(value: any) -> dbl {
+    // Convert to float
+}
+
+fn asStr(value: any) -> str {
+    // Convert to string
+}
+
+fn asBool(value: any) -> bool {
+    // Convert to boolean
+}
+
+fn asList(value: any) -> list {
+    // Convert to list
+}
+
+fn asMap(value: any) -> map {
+    // Convert to map
+}
+
+fn asBytes(value: any) -> blob {
+    // Convert to bytes
+}
+
+fn asTensor(value: any) -> tensor {
+    // Convert to tensor
+}
+
+// ===== String Operations =====
+fn length(value: any) -> ant {
+    // Get length
+}
+
+fn trim(value: str) -> str {
+    // Remove whitespace
+}
+
+fn cut(value: str, sep: str) -> list {
+    // Split string
+}
+
+fn glue(parts: list, sep: str) -> str {
+    // Join list to string
+}
+
+fn upper(value: str) -> str {
+    // Uppercase
+}
+
+fn lower(value: str) -> str {
+    // Lowercase
+}
+
+fn swap(value: str, from: str, to: str) -> str {
+    // Replace substring
+}
+
+fn has(value: str, sub: str) -> bool {
+    // Contains check
+}
+
+fn begins(value: str, prefix: str) -> bool {
+    // Starts with check
+}
+
+fn ends(value: str, suffix: str) -> bool {
+    // Ends with check
+}
+
+// ===== Math Functions =====
+fn absolute(n: dbl) -> dbl {
+    // Absolute value
+}
+
+fn root(n: dbl) -> dbl {
+    // Square root
+}
+
+fn power(base: dbl, exp: dbl) -> dbl {
+    // Power
+}
+
+fn logn(n: dbl) -> dbl {
+    // Natural log
+}
+
+fn ceil(n: dbl) -> ant {
+    // Ceiling
+}
+
+fn floor(n: dbl) -> ant {
+    // Floor
+}
+
+fn round(n: dbl) -> ant {
+    // Round
+}
+
+fn clamp(n: dbl, min: dbl, max: dbl) -> dbl {
+    // Clamp value
+}
+
+// ===== Collection Operations =====
+fn append(col: list, item: any) -> list {
+    // Add to end
+}
+
+fn remove(col: list, idx: ant) -> list {
+    // Remove by index
+}
+
+fn pull(col: list) -> any {
+    // Remove from front
+}
+
+fn push(col: list, item: any) -> list {
+    // Add to front
+}
+
+fn slice(col: list, start: ant, end: ant) -> list {
+    // Slice list
+}
+
+fn sift(col: list, fn: any) -> list {
+    // Filter list
+}
+
+fn morph(col: list, fn: any) -> list {
+    // Map over list
+}
+
+fn fold(col: list, fn: any, init: any) -> any {
+    // Reduce list
+}
+
+fn arrange(col: list) -> list {
+    // Sort list
+}
+
+fn flip(col: list) -> list {
+    // Reverse list
+}
+
+// ===== System Functions =====
+fn quit(code: ant) -> nil {
+    // Exit program
+}
+
+fn pause(ms: ant) -> nil {
+    // Sleep milliseconds
+}
+
+fn environ(key: str) -> str {
+    // Get env variable
+}
+
+fn argv() -> list {
+    // Get CLI arguments
+}
+
+fn now() -> long {
+    // Current timestamp
+}
+
+fn pid() -> ant {
+    // Process ID
+}
+
+// ===== Error/Debug =====
+fn assert(cond: bool, msg: str) -> nil {
+    // Assert condition
+}
+
+fn expect(value: any, msg: str) -> any {
+    // Expect non-nil
+}
+
+fn debug(value: any) -> nil {
+    // Debug print
+}
+
+fn trace(msg: str) -> nil {
+    // Trace log
+}
+
+fn logit(level: str, msg: str) -> nil {
+    // Structured log
+}
+
+fn benchmark(name: str, fn: any) -> dbl {
+    // Benchmark function
+}
+
+// ===== Async =====
+fn spawnTask(fn: any) -> any {
+    // Spawn async task
+}
+
+fn awaitAll(tasks: list) -> list {
+    // Await all tasks
+}
+
+fn joinAll(tasks: list) -> list {
+    // Join all tasks
+}
+
+fn timeout(ms: ant, fn: any) -> any {
+    // Timeout wrapper
+}
+
+fn retry(times: ant, fn: any) -> any {
+    // Retry on failure
+}
+
+fn cancel(task: any) -> nil {
+    // Cancel task
+}

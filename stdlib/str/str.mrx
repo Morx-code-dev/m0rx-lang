@@ -1,0 +1,29 @@
+// M0RX Standard Library - Advanced String
+
+fn format(template: str, args: list) -> str { }
+fn padLeft(s: str, width: ant, char: chr) -> str { }
+fn padRight(s: str, width: ant, char: chr) -> str { }
+fn center(s: str, width: ant) -> str { }
+fn repeat(s: str, n: ant) -> str { }
+fn regexMatch(text: str, pattern: str) -> bool { }
+fn regexFind(text: str, pattern: str) -> list { }
+fn regexReplace(text: str, pattern: str, rep: str) -> str { }
+fn regexSplit(text: str, pattern: str) -> list { }
+fn charCode(c: chr) -> ant { }
+fn fromCode(code: ant) -> chr { }
+fn isAlpha(c: chr) -> bool { }
+fn isDigit(c: chr) -> bool { }
+fn isSpace(c: chr) -> bool { }
+fn isUpper(c: chr) -> bool { }
+fn isLower(c: chr) -> bool { }
+fn toBase64(s: str) -> str { }
+fn fromBase64(s: str) -> str { }
+fn urlEncode(s: str) -> str { }
+fn urlDecode(s: str) -> str { }
+fn htmlEscape(s: str) -> str { }
+fn htmlUnescape(s: str) -> str { }
+fn parseInt(s: str) -> ant { }
+fn parseFloat(s: str) -> dbl { }
+fn parseBool(s: str) -> bool { }
+fn parseJson(s: str) -> any { }
+fn toJson(value: any) -> str { }
