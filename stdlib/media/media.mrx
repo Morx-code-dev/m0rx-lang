@@ -1,0 +1,36 @@
+// M0RX Standard Library - Media Processing
+
+// ===== Video =====
+fn videoLoad(path: str) -> any { }
+fn videoSave(video: any, path: str) -> bool { }
+fn videoDuration(video: any) -> dbl { }
+fn videoFps(video: any) -> dbl { }
+fn videoWidth(video: any) -> ant { }
+fn videoHeight(video: any) -> ant { }
+fn videoTrim(video: any, start: dbl, end: dbl) -> any { }
+fn videoMerge(videos: list) -> any { }
+fn videoExtractAudio(video: any) -> any { }
+fn videoAddAudio(video: any, audio: any) -> any { }
+fn videoThumbnail(video: any, time: dbl) -> any { }
+fn videoCompress(video: any, quality: ant) -> any { }
+fn videoConvert(path: str, format: str, output: str) -> bool { }
+
+// ===== Audio =====
+fn audioLoad(path: str) -> any { }
+fn audioSave(audio: any, path: str) -> bool { }
+fn audioDuration(audio: any) -> dbl { }
+fn audioSampleRate(audio: any) -> ant { }
+fn audioChannels(audio: any) -> ant { }
+fn audioTrim(audio: any, start: dbl, end: dbl) -> any { }
+fn audioMerge(audios: list) -> any { }
+fn audioVolume(audio: any, level: dbl) -> any { }
+fn audioNormalize(audio: any) -> any { }
+fn audioConvert(path: str, format: str, output: str) -> bool { }
+fn audioRecord(duration: ant) -> any { }
+fn audioPlay(audio: any) -> nil { }
+fn audioStop() -> nil { }
+
+// ===== Stream =====
+fn mediaStream(url: str) -> any { }
+fn mediaStreamStop(stream: any) -> nil { }
+fn mediaStreamRecord(stream: any, path: str) -> nil { }

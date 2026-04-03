@@ -1,0 +1,32 @@
+// M0RX Standard Library - Crypto & Blockchain
+
+// ===== Wallet =====
+fn walletCreate() -> map { }
+fn walletFromKey(privateKey: str) -> map { }
+fn walletAddress(wallet: map) -> str { }
+fn walletBalance(wallet: map, rpc: str) -> dbl { }
+fn walletSign(wallet: map, message: str) -> str { }
+fn walletVerify(address: str, message: str, sig: str) -> bool { }
+
+// ===== Transaction =====
+fn txCreate(from: str, to: str, amount: dbl) -> map { }
+fn txSign(tx: map, wallet: map) -> map { }
+fn txSend(tx: map, rpc: str) -> str { }
+fn txStatus(hash: str, rpc: str) -> map { }
+fn txHistory(address: str, rpc: str) -> list { }
+
+// ===== Smart Contract =====
+fn contractLoad(abi: str, address: str, rpc: str) -> any { }
+fn contractCall(contract: any, method: str, params: list) -> any { }
+fn contractSend(contract: any, method: str, params: list, wallet: map) -> str { }
+fn contractDeploy(bytecode: str, abi: str, wallet: map, rpc: str) -> str { }
+
+// ===== Hashing =====
+fn keccak256(data: blob) -> str { }
+fn blake2b(data: blob) -> str { }
+fn ripemd160(data: blob) -> str { }
+
+// ===== Keys =====
+fn keyGenEd25519() -> map { }
+fn keyGenSecp256k1() -> map { }
+fn keyDerive(seed: str, path: str) -> map { }

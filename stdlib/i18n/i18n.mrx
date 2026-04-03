@@ -1,0 +1,9 @@
+// M0RX - i18n
+fn i18nLoad(path: str) -> any { }
+fn i18nTranslate(t: any, key: str, lang: str) -> str { }
+fn i18nSetLang(t: any, lang: str) -> nil { }
+fn i18nGetLang(t: any) -> str { }
+fn i18nFormat(t: any, key: str, args: map) -> str { }
+fn i18nLocale(t: any) -> map { }
+fn i18nCurrency(amount: dbl, locale: str) -> str { }
+fn i18nDate(date: map, locale: str) -> str { }

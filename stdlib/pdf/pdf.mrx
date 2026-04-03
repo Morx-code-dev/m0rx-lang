@@ -1,0 +1,26 @@
+// M0RX Standard Library - PDF
+
+// ===== Create =====
+fn pdfCreate() -> any { }
+fn pdfAddPage(doc: any) -> any { }
+fn pdfAddText(doc: any, text: str, x: dbl, y: dbl, size: ant) -> nil { }
+fn pdfAddImage(doc: any, path: str, x: dbl, y: dbl, w: dbl, h: dbl) -> nil { }
+fn pdfAddTable(doc: any, data: list, x: dbl, y: dbl) -> nil { }
+fn pdfAddLink(doc: any, url: str, x: dbl, y: dbl, w: dbl, h: dbl) -> nil { }
+fn pdfSave(doc: any, path: str) -> bool { }
+
+// ===== Read =====
+fn pdfRead(path: str) -> any { }
+fn pdfText(doc: any) -> str { }
+fn pdfPages(doc: any) -> ant { }
+fn pdfPageText(doc: any, page: ant) -> str { }
+fn pdfImages(doc: any) -> list { }
+
+// ===== Edit =====
+fn pdfMerge(files: list, output: str) -> bool { }
+fn pdfSplit(path: str, pages: list, output: str) -> bool { }
+fn pdfRotate(path: str, degrees: ant, output: str) -> bool { }
+fn pdfWatermark(path: str, text: str, output: str) -> bool { }
+fn pdfEncrypt(path: str, password: str, output: str) -> bool { }
+fn pdfDecrypt(path: str, password: str, output: str) -> bool { }
+fn pdfSign(path: str, cert: str, output: str) -> bool { }

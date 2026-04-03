@@ -1,0 +1,22 @@
+// M0RX Standard Library - Charts & Visualization
+
+// ===== Create Charts =====
+fn chartBar(data: map, title: str) -> any { }
+fn chartLine(data: map, title: str) -> any { }
+fn chartPie(data: map, title: str) -> any { }
+fn chartScatter(data: list, title: str) -> any { }
+fn chartArea(data: map, title: str) -> any { }
+fn chartHeatmap(data: list, title: str) -> any { }
+fn chartHistogram(data: list, bins: ant) -> any { }
+fn chartGantt(tasks: list, title: str) -> any { }
+
+// ===== Render =====
+fn chartRenderHtml(chart: any) -> str { }
+fn chartRenderPng(chart: any, path: str) -> bool { }
+fn chartRenderSvg(chart: any) -> str { }
+
+// ===== Dashboard =====
+fn dashCreate(title: str) -> any { }
+fn dashAddChart(dash: any, chart: any, row: ant, col: ant) -> nil { }
+fn dashRender(dash: any) -> str { }
+fn dashSave(dash: any, path: str) -> bool { }

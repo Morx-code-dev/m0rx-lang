@@ -1,0 +1,42 @@
+// M0RX Standard Library - Image Processing
+
+// ===== Load/Save =====
+fn imgLoad(path: str) -> any { }
+fn imgSave(img: any, path: str) -> bool { }
+fn imgFromBytes(data: blob) -> any { }
+fn imgToBytes(img: any, format: str) -> blob { }
+fn imgFromUrl(url: str) -> any { }
+
+// ===== Basic Ops =====
+fn imgWidth(img: any) -> ant { }
+fn imgHeight(img: any) -> ant { }
+fn imgResize(img: any, w: ant, h: ant) -> any { }
+fn imgCrop(img: any, x: ant, y: ant, w: ant, h: ant) -> any { }
+fn imgRotate(img: any, degrees: dbl) -> any { }
+fn imgFlipH(img: any) -> any { }
+fn imgFlipV(img: any) -> any { }
+
+// ===== Filters =====
+fn imgGrayscale(img: any) -> any { }
+fn imgBlur(img: any, radius: ant) -> any { }
+fn imgSharpen(img: any) -> any { }
+fn imgBrightness(img: any, val: dbl) -> any { }
+fn imgContrast(img: any, val: dbl) -> any { }
+fn imgSaturate(img: any, val: dbl) -> any { }
+fn imgInvert(img: any) -> any { }
+fn imgThreshold(img: any, val: ant) -> any { }
+
+// ===== Draw =====
+fn imgDrawText(img: any, text: str, x: ant, y: ant, color: str) -> any { }
+fn imgDrawRect(img: any, x: ant, y: ant, w: ant, h: ant, color: str) -> any { }
+fn imgDrawCircle(img: any, x: ant, y: ant, r: ant, color: str) -> any { }
+fn imgDrawLine(img: any, x1: ant, y1: ant, x2: ant, y2: ant, color: str) -> any { }
+fn imgCompose(base: any, overlay: any, x: ant, y: ant) -> any { }
+
+// ===== OCR =====
+fn ocrRead(img: any) -> str { }
+fn ocrReadFile(path: str) -> str { }
+
+// ===== QR Code =====
+fn qrGenerate(data: str, size: ant) -> any { }
+fn qrRead(img: any) -> str { }

@@ -1,0 +1,36 @@
+// M0RX Standard Library - Cloud
+
+// ===== AWS =====
+fn awsConnect(region: str, key: str, secret: str) -> any { }
+fn awsS3Upload(conn: any, bucket: str, key: str, file: str) -> bool { }
+fn awsS3Download(conn: any, bucket: str, key: str, dest: str) -> bool { }
+fn awsS3Delete(conn: any, bucket: str, key: str) -> bool { }
+fn awsS3List(conn: any, bucket: str, prefix: str) -> list { }
+fn awsLambdaInvoke(conn: any, name: str, payload: map) -> any { }
+fn awsSqsSend(conn: any, queue: str, msg: str) -> bool { }
+fn awsSqsReceive(conn: any, queue: str) -> list { }
+fn awsSesEmail(conn: any, to: str, subject: str, body: str) -> bool { }
+fn awsDynamoGet(conn: any, table: str, key: map) -> map { }
+fn awsDynamoPut(conn: any, table: str, item: map) -> bool { }
+
+// ===== GCP =====
+fn gcpConnect(project: str, credentials: str) -> any { }
+fn gcpStorageUpload(conn: any, bucket: str, file: str) -> bool { }
+fn gcpStorageDownload(conn: any, bucket: str, dest: str) -> bool { }
+fn gcpFirestoreGet(conn: any, collection: str, id: str) -> map { }
+fn gcpFirestoreSet(conn: any, collection: str, id: str, data: map) -> bool { }
+fn gcpPubsubPublish(conn: any, topic: str, msg: str) -> bool { }
+fn gcpPubsubSubscribe(conn: any, sub: str, fn: any) -> nil { }
+
+// ===== Azure =====
+fn azureConnect(tenant: str, client: str, secret: str) -> any { }
+fn azureBlobUpload(conn: any, container: str, file: str) -> bool { }
+fn azureBlobDownload(conn: any, container: str, dest: str) -> bool { }
+fn azureQueueSend(conn: any, queue: str, msg: str) -> bool { }
+fn azureQueueReceive(conn: any, queue: str) -> list { }
+
+// ===== Cloudflare =====
+fn cfKvGet(namespace: str, key: str) -> any { }
+fn cfKvSet(namespace: str, key: str, value: any) -> bool { }
+fn cfKvDelete(namespace: str, key: str) -> bool { }
+fn cfCachePurge(urls: list) -> bool { }

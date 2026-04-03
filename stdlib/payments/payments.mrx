@@ -1,0 +1,23 @@
+// M0RX Standard Library - Payments
+
+// ===== Stripe =====
+fn stripeInit(apiKey: str) -> any { }
+fn stripeCharge(client: any, amount: ant, currency: str, source: str) -> map { }
+fn stripeRefund(client: any, chargeId: str) -> map { }
+fn stripeCustomerCreate(client: any, email: str) -> map { }
+fn stripeSubscriptionCreate(client: any, customerId: str, planId: str) -> map { }
+fn stripeSubscriptionCancel(client: any, subId: str) -> bool { }
+fn stripeWebhook(payload: str, secret: str) -> map { }
+fn stripePaymentIntent(client: any, amount: ant, currency: str) -> map { }
+
+// ===== Razorpay =====
+fn razorpayInit(keyId: str, secret: str) -> any { }
+fn razorpayOrderCreate(client: any, amount: ant, currency: str) -> map { }
+fn razorpayVerify(client: any, orderId: str, paymentId: str, sig: str) -> bool { }
+fn razorpayRefund(client: any, paymentId: str, amount: ant) -> map { }
+
+// ===== PayPal =====
+fn paypalInit(clientId: str, secret: str, sandbox: bool) -> any { }
+fn paypalOrderCreate(client: any, amount: dbl, currency: str) -> map { }
+fn paypalOrderCapture(client: any, orderId: str) -> map { }
+fn paypalRefund(client: any, captureId: str) -> map { }
