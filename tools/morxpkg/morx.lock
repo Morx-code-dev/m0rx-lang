@@ -1,0 +1,31 @@
+# M0RX Lock File - Auto generated
+# Do not edit manually
+
+[[package]]
+name = "m0rx.core"
+version = "0.1.0"
+checksum = "sha256:abc123def456"
+
+[[package]]
+name = "m0rx.backend"
+version = "0.1.0"
+checksum = "sha256:bcd234efg567"
+dependencies = ["m0rx.core"]
+
+[[package]]
+name = "m0rx.ui"
+version = "0.1.0"
+checksum = "sha256:cde345fgh678"
+dependencies = ["m0rx.core"]
+
+[[package]]
+name = "m0rx.ai"
+version = "0.1.0"
+checksum = "sha256:def456ghi789"
+dependencies = ["m0rx.core"]
+
+[[package]]
+name = "m0rx.voice"
+version = "0.1.0"
+checksum = "sha256:efg567hij890"
+dependencies = ["m0rx.core", "m0rx.ai"]

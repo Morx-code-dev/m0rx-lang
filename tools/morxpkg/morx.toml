@@ -1,0 +1,32 @@
+# M0RX Package Manager Config
+
+[package]
+name = "m0rx-lang"
+version = "0.1.0"
+author = "Morx-code-dev"
+description = "M0RX — Next-gen compiled language for AI era"
+license = "MIT"
+homepage = "https://github.com/Morx-code-dev/m0rx-lang"
+repository = "https://github.com/Morx-code-dev/m0rx-lang"
+keywords = ["language", "compiler", "ai", "backend"]
+
+[dependencies]
+m0rx.core = "0.1.0"
+m0rx.backend = "0.1.0"
+m0rx.ui = "0.1.0"
+m0rx.ai = "0.1.0"
+m0rx.voice = "0.1.0"
+
+[dev-dependencies]
+m0rx.test = "0.1.0"
+
+[build]
+entry = "main.mrx"
+output = "build/"
+target = "native"
+optimize = "release"
+
+[features]
+default = ["core", "backend"]
+full = ["core", "backend", "ui", "ai", "voice"]
+minimal = ["core"]
