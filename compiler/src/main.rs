@@ -6,6 +6,7 @@ mod codegen;
 use lexer::Lexer;
 use parser::Parser;
 use analyzer::typechecker::TypeChecker;
+use analyzer::semantic::SemanticAnalyzer;
 
 fn main() {
     println!("M0RX Compiler v0.1.0");
@@ -26,27 +27,41 @@ fn main() {
         }
     "#;
 
-    // Step 2: Lexer
+    // Lexer
     let mut lex = Lexer::new(code);
     let tokens = lex.tokenize();
-    println!("Tokens found: {}", tokens.len());
+    println!("Tokens:     {}", tokens.len());
 
-    // Step 3: Parser
+    // Parser
     let mut parser = Parser::new(tokens);
     let program = parser.parse();
-    println!("Statements parsed: {}", program.stmts.len());
+    println!("Statements: {}", program.stmts.len());
 
-    // Step 4: Type Checker
-    let mut checker = TypeChecker::new();
-    let errors = checker.check(&program);
-    if errors.is_empty() {
-        println!("Type Check: PASSED");
+    // Semantic Analyzer
+    let mut semantic = SemanticAnalyzer::new();
+    semantic.analyze(&program);
+    if semantic.errors.is_empty() {
+        println!("Semantic:   PASSED");
     } else {
-        for err in &errors {
-            println!("{}", err);
+        for e in &semantic.errors {
+            println!("{}", e);
+        }
+    }
+    for w in &semantic.warnings {
+        println!("{}", w);
+    }
+
+    // Type Checker
+    let mut checker = TypeChecker::new();
+    let type_errors = checker.check(&program);
+    if type_errors.is_empty() {
+        println!("Types:      PASSED");
+    } else {
+        for e in &type_errors {
+            println!("{}", e);
         }
     }
 
     println!("====================");
-    println!("M0RX: OK");
+    println!("M0RX: Build OK");
 }
