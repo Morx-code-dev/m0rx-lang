@@ -1,0 +1,145 @@
+// M0RX Main Library - Backend
+// High-level backend framework
+
+// ===== App =====
+fn appCreate() -> any { }
+fn appListen(app: any, port: ant) -> nil { }
+fn appStop(app: any) -> nil { }
+fn appUse(app: any, middleware: any) -> nil { }
+fn appSet(app: any, key: str, value: any) -> nil { }
+fn appGet(app: any, key: str) -> any { }
+
+// ===== Routing =====
+fn routeGet(app: any, path: str, fn: any) -> nil { }
+fn routePost(app: any, path: str, fn: any) -> nil { }
+fn routePut(app: any, path: str, fn: any) -> nil { }
+fn routePatch(app: any, path: str, fn: any) -> nil { }
+fn routeDelete(app: any, path: str, fn: any) -> nil { }
+fn routeGroup(app: any, prefix: str) -> any { }
+fn routeParam(app: any, name: str, fn: any) -> nil { }
+fn routeAll(app: any, path: str, fn: any) -> nil { }
+
+// ===== Middleware =====
+fn middlewareCors(origins: list) -> any { }
+fn middlewareHelmet() -> any { }
+fn middlewareLogger() -> any { }
+fn middlewareCompress() -> any { }
+fn middlewareRateLimit(max: ant, window: ant) -> any { }
+fn middlewareAuth(secret: str) -> any { }
+fn middlewareBody() -> any { }
+fn middlewareCookie(secret: str) -> any { }
+fn middlewareSession(config: map) -> any { }
+fn middlewareCache(ttl: ant) -> any { }
+fn middlewareTimeout(ms: ant) -> any { }
+
+// ===== Request =====
+fn reqGetBody(req: any) -> any { }
+fn reqGetJson(req: any) -> map { }
+fn reqGetParams(req: any) -> map { }
+fn reqGetQuery(req: any) -> map { }
+fn reqGetHeaders(req: any) -> map { }
+fn reqGetHeader(req: any, key: str) -> str { }
+fn reqGetCookie(req: any, name: str) -> str { }
+fn reqGetSession(req: any) -> map { }
+fn reqGetIp(req: any) -> str { }
+fn reqGetMethod(req: any) -> str { }
+fn reqGetPath(req: any) -> str { }
+fn reqGetFile(req: any, field: str) -> map { }
+fn reqIsAuth(req: any) -> bool { }
+fn reqGetUser(req: any) -> map { }
+
+// ===== Response =====
+fn resSendJson(res: any, data: any) -> nil { }
+fn resSendText(res: any, text: str) -> nil { }
+fn resSendHtml(res: any, html: str) -> nil { }
+fn resSendFile(res: any, path: str) -> nil { }
+fn resSendStream(res: any, stream: any) -> nil { }
+fn resSetStatus(res: any, code: ant) -> any { }
+fn resSetHeader(res: any, key: str, val: str) -> nil { }
+fn resSetCookie(res: any, name: str, val: str, opts: map) -> nil { }
+fn resClearCookie(res: any, name: str) -> nil { }
+fn resRedirectTo(res: any, url: str, code: ant) -> nil { }
+fn resEnd(res: any) -> nil { }
+
+// ===== Authentication =====
+fn authJwtCreate(payload: map, secret: str, expiry: ant) -> str { }
+fn authJwtVerify(token: str, secret: str) -> map { }
+fn authJwtRefresh(token: str, secret: str) -> str { }
+fn authHashPassword(password: str) -> str { }
+fn authVerifyPassword(password: str, hash: str) -> bool { }
+fn authOAuthCreate(config: map) -> any { }
+fn authOAuthCallback(client: any, code: str) -> map { }
+fn authApiKeyCreate(userId: str) -> str { }
+fn authApiKeyVerify(key: str) -> map { }
+
+// ===== ORM =====
+fn ormConnect(url: str) -> any { }
+fn ormModel(conn: any, name: str, schema: map) -> any { }
+fn ormFind(model: any, query: map) -> list { }
+fn ormFindOne(model: any, query: map) -> map { }
+fn ormFindById(model: any, id: str) -> map { }
+fn ormCreate(model: any, data: map) -> map { }
+fn ormUpdate(model: any, id: str, data: map) -> map { }
+fn ormDelete(model: any, id: str) -> bool { }
+fn ormCount(model: any, query: map) -> ant { }
+fn ormPaginate(model: any, query: map, page: ant, limit: ant) -> map { }
+fn ormPopulate(model: any, field: str) -> any { }
+fn ormTransaction(conn: any, fn: any) -> any { }
+
+// ===== WebSocket =====
+fn wsServerCreate(app: any, path: str) -> any { }
+fn wsOnConnect(server: any, fn: any) -> nil { }
+fn wsOnMessage(server: any, fn: any) -> nil { }
+fn wsOnDisconnect(server: any, fn: any) -> nil { }
+fn wsBroadcast(server: any, msg: any) -> nil { }
+fn wsSendTo(socket: any, msg: any) -> nil { }
+fn wsRooms(server: any) -> any { }
+fn wsJoinRoom(socket: any, room: str) -> nil { }
+fn wsLeaveRoom(socket: any, room: str) -> nil { }
+fn wsBroadcastRoom(server: any, room: str, msg: any) -> nil { }
+
+// ===== GraphQL =====
+fn graphqlCreate(schema: str) -> any { }
+fn graphqlQuery(server: any, query: str, vars: map) -> any { }
+fn graphqlResolver(server: any, type: str, field: str, fn: any) -> nil { }
+fn graphqlMiddleware(server: any, fn: any) -> nil { }
+fn graphqlSubscription(server: any, event: str, fn: any) -> nil { }
+
+// ===== gRPC =====
+fn grpcServer(proto: str, port: ant) -> any { }
+fn grpcAddService(server: any, name: str, handlers: map) -> nil { }
+fn grpcClient(proto: str, addr: str) -> any { }
+fn grpcCall(client: any, method: str, data: map) -> any { }
+fn grpcStream(client: any, method: str, fn: any) -> nil { }
+
+// ===== Queue / Jobs =====
+fn queueCreate(config: map) -> any { }
+fn queueAdd(q: any, job: map, opts: map) -> str { }
+fn queueProcess(q: any, name: str, fn: any) -> nil { }
+fn queueSchedule(q: any, cron: str, fn: any) -> nil { }
+fn queuePause(q: any) -> nil { }
+fn queueResume(q: any) -> nil { }
+fn queueStatus(q: any, jobId: str) -> map { }
+
+// ===== Microservices =====
+fn serviceCreate(name: str, config: map) -> any { }
+fn serviceRegister(service: any, registry: str) -> bool { }
+fn serviceDiscover(name: str, registry: str) -> list { }
+fn serviceCall(service: any, method: str, data: map) -> any { }
+fn serviceHealth(service: any) -> map { }
+
+// ===== API Integration =====
+fn openaiCreate(apiKey: str) -> any { }
+fn openaiChat(client: any, messages: list, model: str) -> str { }
+fn openaiComplete(client: any, prompt: str, model: str) -> str { }
+fn openaiEmbed(client: any, text: str) -> list { }
+fn openaiImage(client: any, prompt: str, size: str) -> str { }
+
+fn anthropicCreate(apiKey: str) -> any { }
+fn anthropicChat(client: any, messages: list, model: str) -> str { }
+fn anthropicStream(client: any, messages: list, fn: any) -> nil { }
+
+fn openrouterCreate(apiKey: str) -> any { }
+fn openrouterChat(client: any, model: str, messages: list) -> str { }
+fn openrouterModels(client: any) -> list { }
+fn openrouterStream(client: any, model: str, messages: list, fn: any) -> nil { }

@@ -1,0 +1,47 @@
+// M0RX Main Library - TTS + STT
+// Uses Coqui / Whisper / Piper
+
+// ===== TTS (Text to Speech) =====
+fn ttsCreate(model: str, lang: str) -> any { }
+fn ttsSpeak(engine: any, text: str) -> any { }
+fn ttsSpeakFile(engine: any, text: str, path: str) -> bool { }
+fn ttsSetVoice(engine: any, voice: str) -> nil { }
+fn ttsSetSpeed(engine: any, speed: dbl) -> nil { }
+fn ttsSetPitch(engine: any, pitch: dbl) -> nil { }
+fn ttsSetVolume(engine: any, vol: dbl) -> nil { }
+fn ttsListVoices(engine: any) -> list { }
+fn ttsListLangs() -> list { }
+fn ttsStream(engine: any, text: str, fn: any) -> nil { }
+fn ttsCloneVoice(audioPath: str) -> any { }
+fn ttsSsml(engine: any, ssml: str) -> any { }
+fn ttsEmotional(engine: any, text: str, emotion: str) -> any { }
+fn ttsPause(engine: any) -> nil { }
+fn ttsResume(engine: any) -> nil { }
+fn ttsStop(engine: any) -> nil { }
+
+// ===== STT (Speech to Text) =====
+fn sttCreate(model: str, lang: str) -> any { }
+fn sttFromFile(engine: any, path: str) -> str { }
+fn sttFromMic(engine: any, duration: ant) -> str { }
+fn sttStream(engine: any, fn: any) -> any { }
+fn sttStreamStop(stream: any) -> nil { }
+fn sttSetLang(engine: any, lang: str) -> nil { }
+fn sttSetModel(engine: any, model: str) -> nil { }
+fn sttWithTimestamps(engine: any, path: str) -> list { }
+fn sttWithSpeakers(engine: any, path: str) -> list { }
+fn sttDetectLang(engine: any, path: str) -> str { }
+fn sttTranslate(engine: any, path: str, targetLang: str) -> str { }
+
+// ===== Audio Processing =====
+fn audioNoiseCancel(audio: any) -> any { }
+fn audioNormalize(audio: any) -> any { }
+fn audioTrimSilence(audio: any) -> any { }
+fn audioDetectEmotion(audio: any) -> str { }
+fn audioDetectLang(audio: any) -> str { }
+fn audioSpeakerVerify(audio1: any, audio2: any) -> dbl { }
+fn audioConvertFormat(path: str, format: str) -> bool { }
+
+// ===== Wake Word =====
+fn wakeWordCreate(word: str) -> any { }
+fn wakeWordListen(engine: any, fn: any) -> nil { }
+fn wakeWordStop(engine: any) -> nil { }

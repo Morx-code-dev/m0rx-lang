@@ -1,0 +1,244 @@
+// M0RX Main Library - UI/UX, Graphics & Game Engine
+
+// ===== App Window =====
+fn windowCreate(title: str, width: ant, height: ant) -> any { }
+fn windowShow(win: any) -> nil { }
+fn windowHide(win: any) -> nil { }
+fn windowClose(win: any) -> nil { }
+fn windowResize(win: any, w: ant, h: ant) -> nil { }
+fn windowFullscreen(win: any, enabled: bool) -> nil { }
+fn windowTitle(win: any, title: str) -> nil { }
+fn windowIcon(win: any, path: str) -> nil { }
+fn windowOnClose(win: any, fn: any) -> nil { }
+fn windowOnResize(win: any, fn: any) -> nil { }
+fn windowOnFocus(win: any, fn: any) -> nil { }
+fn windowOnBlur(win: any, fn: any) -> nil { }
+
+// ===== Mouse Events =====
+fn onClick(element: any, fn: any) -> nil { }
+fn onDoubleClick(element: any, fn: any) -> nil { }
+fn onRightClick(element: any, fn: any) -> nil { }
+fn onHover(element: any, fn: any) -> nil { }
+fn onMouseEnter(element: any, fn: any) -> nil { }
+fn onMouseLeave(element: any, fn: any) -> nil { }
+fn onMouseDown(element: any, fn: any) -> nil { }
+fn onMouseUp(element: any, fn: any) -> nil { }
+fn onMouseMove(element: any, fn: any) -> nil { }
+fn onScroll(element: any, fn: any) -> nil { }
+fn onWheel(element: any, fn: any) -> nil { }
+
+// ===== Keyboard Events =====
+fn onKeyPress(element: any, fn: any) -> nil { }
+fn onKeyDown(element: any, fn: any) -> nil { }
+fn onKeyUp(element: any, fn: any) -> nil { }
+fn onShortcut(keys: str, fn: any) -> nil { }
+fn onTextInput(element: any, fn: any) -> nil { }
+
+// ===== Touch Events =====
+fn onTap(element: any, fn: any) -> nil { }
+fn onDoubleTap(element: any, fn: any) -> nil { }
+fn onLongPress(element: any, fn: any) -> nil { }
+fn onSwipeLeft(element: any, fn: any) -> nil { }
+fn onSwipeRight(element: any, fn: any) -> nil { }
+fn onSwipeUp(element: any, fn: any) -> nil { }
+fn onSwipeDown(element: any, fn: any) -> nil { }
+fn onPinchIn(element: any, fn: any) -> nil { }
+fn onPinchOut(element: any, fn: any) -> nil { }
+fn onDrag(element: any, fn: any) -> nil { }
+fn onDrop(element: any, fn: any) -> nil { }
+
+// ===== GUI Components =====
+fn btnCreate(text: str) -> any { }
+fn btnStyle(btn: any, style: map) -> nil { }
+fn btnDisable(btn: any) -> nil { }
+fn btnEnable(btn: any) -> nil { }
+
+fn labelCreate(text: str) -> any { }
+fn labelSetText(label: any, text: str) -> nil { }
+fn labelSetFont(label: any, font: str, size: ant) -> nil { }
+
+fn inputCreate(placeholder: str) -> any { }
+fn inputGetValue(input: any) -> str { }
+fn inputSetValue(input: any, val: str) -> nil { }
+fn inputOnChange(input: any, fn: any) -> nil { }
+fn inputOnSubmit(input: any, fn: any) -> nil { }
+fn inputSetType(input: any, type: str) -> nil { }
+
+fn textareaCreate(placeholder: str) -> any { }
+fn textareaGetValue(ta: any) -> str { }
+fn textareaSetValue(ta: any, val: str) -> nil { }
+
+fn checkboxCreate(label: str) -> any { }
+fn checkboxIsChecked(cb: any) -> bool { }
+fn checkboxSetChecked(cb: any, val: bool) -> nil { }
+fn checkboxOnChange(cb: any, fn: any) -> nil { }
+
+fn radioCreate(options: list) -> any { }
+fn radioGetValue(radio: any) -> str { }
+fn radioOnChange(radio: any, fn: any) -> nil { }
+
+fn selectCreate(options: list) -> any { }
+fn selectGetValue(sel: any) -> str { }
+fn selectSetValue(sel: any, val: str) -> nil { }
+fn selectOnChange(sel: any, fn: any) -> nil { }
+
+fn sliderCreate(min: dbl, max: dbl, step: dbl) -> any { }
+fn sliderGetValue(sl: any) -> dbl { }
+fn sliderOnChange(sl: any, fn: any) -> nil { }
+
+fn modalCreate(title: str, content: any) -> any { }
+fn modalShow(modal: any) -> nil { }
+fn modalHide(modal: any) -> nil { }
+fn modalOnClose(modal: any, fn: any) -> nil { }
+
+fn toastShow(msg: str, type: str, duration: ant) -> nil { }
+fn tooltipCreate(element: any, text: str) -> nil { }
+fn progressCreate(value: dbl, max: dbl) -> any { }
+fn progressSetValue(bar: any, value: dbl) -> nil { }
+fn spinnerCreate() -> any { }
+fn spinnerShow(spinner: any) -> nil { }
+fn spinnerHide(spinner: any) -> nil { }
+fn tableCreate(cols: list, rows: list) -> any { }
+fn tabsCreate(items: list) -> any { }
+fn accordionCreate(items: list) -> any { }
+fn menuCreate(items: list) -> any { }
+fn dropdownCreate(trigger: any, items: list) -> any { }
+fn cardCreate(title: str, content: any) -> any { }
+fn badgeCreate(text: str, color: str) -> any { }
+fn avatarCreate(src: str, size: ant) -> any { }
+fn dividerCreate() -> any { }
+fn spacerCreate(size: ant) -> any { }
+
+// ===== Layout =====
+fn layoutFlex(direction: str, children: list) -> any { }
+fn layoutGrid(cols: ant, rows: ant, children: list) -> any { }
+fn layoutStack(children: list) -> any { }
+fn layoutAbsolute(children: list) -> any { }
+fn layoutScroll(content: any) -> any { }
+fn layoutSplit(left: any, right: any, ratio: dbl) -> any { }
+fn layoutSidebar(sidebar: any, content: any) -> any { }
+fn layoutCenter(content: any) -> any { }
+fn containerCreate(content: any, padding: ant) -> any { }
+
+// ===== Theme =====
+fn themeCreate(colors: map, fonts: map) -> any { }
+fn themeApply(theme: any) -> nil { }
+fn themeDark() -> any { }
+fn themeLight() -> any { }
+fn themeToggle() -> nil { }
+fn themeGetCurrent() -> str { }
+fn colorCreate(r: ant, g: ant, b: ant, a: dbl) -> str { }
+fn colorFromHex(hex: str) -> map { }
+fn colorToHex(color: map) -> str { }
+
+// ===== 2D Engine =====
+fn canvasCreate(width: ant, height: ant) -> any { }
+fn canvasClear(canvas: any) -> nil { }
+fn canvasDrawRect(canvas: any, x: dbl, y: dbl, w: dbl, h: dbl, color: str) -> nil { }
+fn canvasDrawCircle(canvas: any, x: dbl, y: dbl, r: dbl, color: str) -> nil { }
+fn canvasDrawLine(canvas: any, x1: dbl, y1: dbl, x2: dbl, y2: dbl, color: str) -> nil { }
+fn canvasDrawText(canvas: any, text: str, x: dbl, y: dbl, font: str, color: str) -> nil { }
+fn canvasDrawImage(canvas: any, img: any, x: dbl, y: dbl) -> nil { }
+fn canvasFill(canvas: any, color: str) -> nil { }
+fn canvasStroke(canvas: any, color: str, width: dbl) -> nil { }
+fn canvasRotate(canvas: any, angle: dbl) -> nil { }
+fn canvasScale(canvas: any, x: dbl, y: dbl) -> nil { }
+fn canvasTranslate(canvas: any, x: dbl, y: dbl) -> nil { }
+fn canvasSave(canvas: any) -> nil { }
+fn canvasRestore(canvas: any) -> nil { }
+
+// ===== 3D Engine =====
+fn scene3dCreate() -> any { }
+fn scene3dAddMesh(scene: any, mesh: any) -> nil { }
+fn scene3dAddLight(scene: any, light: any) -> nil { }
+fn scene3dSetCamera(scene: any, camera: any) -> nil { }
+fn scene3dRender(scene: any, canvas: any) -> nil { }
+fn meshCreate(geometry: str, material: any) -> any { }
+fn meshBox(w: dbl, h: dbl, d: dbl) -> any { }
+fn meshSphere(radius: dbl, segments: ant) -> any { }
+fn meshCylinder(r: dbl, h: dbl) -> any { }
+fn meshPlane(w: dbl, h: dbl) -> any { }
+fn meshLoad(path: str) -> any { }
+fn meshSetPos(mesh: any, x: dbl, y: dbl, z: dbl) -> nil { }
+fn meshSetRot(mesh: any, x: dbl, y: dbl, z: dbl) -> nil { }
+fn meshSetScale(mesh: any, x: dbl, y: dbl, z: dbl) -> nil { }
+fn materialCreate(color: str, texture: str) -> any { }
+fn materialPbr(albedo: str, roughness: dbl, metallic: dbl) -> any { }
+fn lightPoint(x: dbl, y: dbl, z: dbl, color: str, intensity: dbl) -> any { }
+fn lightDirectional(dir: list, color: str, intensity: dbl) -> any { }
+fn lightAmbient(color: str, intensity: dbl) -> any { }
+fn cameraCreate(fov: dbl, near: dbl, far: dbl) -> any { }
+fn cameraSetPos(cam: any, x: dbl, y: dbl, z: dbl) -> nil { }
+fn cameraLookAt(cam: any, x: dbl, y: dbl, z: dbl) -> nil { }
+
+// ===== Animation =====
+fn animCreate(target: any, props: map, duration: ant) -> any { }
+fn animStart(anim: any) -> nil { }
+fn animStop(anim: any) -> nil { }
+fn animPause(anim: any) -> nil { }
+fn animRepeat(anim: any, times: ant) -> nil { }
+fn animEasing(anim: any, type: str) -> nil { }
+fn animOnComplete(anim: any, fn: any) -> nil { }
+fn animKeyframe(target: any, frames: list) -> any { }
+fn animSkeletal(mesh: any, skeleton: any) -> any { }
+fn animPlay(anim: any, name: str) -> nil { }
+fn animBlend(anim1: any, anim2: any, weight: dbl) -> any { }
+
+// ===== Sprite & Game 2D =====
+fn spriteCreate(img: any) -> any { }
+fn spriteSetPos(sprite: any, x: dbl, y: dbl) -> nil { }
+fn spriteSetSize(sprite: any, w: dbl, h: dbl) -> nil { }
+fn spriteSetRotation(sprite: any, angle: dbl) -> nil { }
+fn spriteAnimate(sprite: any, frames: list, fps: ant) -> nil { }
+fn spriteOnCollide(sprite: any, other: any, fn: any) -> nil { }
+fn physicsCreate() -> any { }
+fn physicsAddBody(world: any, body: any) -> nil { }
+fn physicsStep(world: any, dt: dbl) -> nil { }
+fn physicsGravity(world: any, x: dbl, y: dbl) -> nil { }
+
+// ===== Game Engine =====
+fn gameCreate(config: map) -> any { }
+fn gameStart(game: any) -> nil { }
+fn gameStop(game: any) -> nil { }
+fn gamePause(game: any) -> nil { }
+fn gameResume(game: any) -> nil { }
+fn onUpdate(game: any, fn: any) -> nil { }
+fn onRender(game: any, fn: any) -> nil { }
+fn onCollide(objA: any, objB: any, fn: any) -> nil { }
+fn onTrigger(zone: any, obj: any, fn: any) -> nil { }
+fn onAnimEnd(anim: any, fn: any) -> nil { }
+fn sceneCreate(name: str) -> any { }
+fn sceneLoad(game: any, name: str) -> nil { }
+fn sceneAdd(game: any, scene: any) -> nil { }
+fn gameObject(name: str) -> any { }
+fn gameObjectAddComponent(obj: any, component: any) -> nil { }
+fn gameObjectGetComponent(obj: any, type: str) -> any { }
+fn soundLoad(path: str) -> any { }
+fn soundPlay(sound: any) -> nil { }
+fn soundStop(sound: any) -> nil { }
+fn soundVolume(sound: any, vol: dbl) -> nil { }
+fn soundLoop(sound: any, loop: bool) -> nil { }
+
+// ===== Cartoon / SVG Animation =====
+fn svgCreate(width: ant, height: ant) -> any { }
+fn svgAddShape(svg: any, shape: map) -> nil { }
+fn svgAnimate(svg: any, target: str, props: map, duration: ant) -> nil { }
+fn svgExport(svg: any) -> str { }
+fn cartoonCreate(fps: ant, width: ant, height: ant) -> any { }
+fn cartoonAddFrame(cartoon: any, frame: any) -> nil { }
+fn cartoonPlay(cartoon: any) -> nil { }
+fn cartoonExport(cartoon: any, path: str) -> bool { }
+
+// ===== Mobile Framework =====
+fn mobileApp(config: map) -> any { }
+fn mobileScreen(name: str, content: any) -> any { }
+fn mobileNavigate(app: any, screen: str) -> nil { }
+fn mobileBack(app: any) -> nil { }
+fn mobileStatusBar(color: str, style: str) -> nil { }
+fn mobileVibrate(duration: ant) -> nil { }
+fn mobileCamera() -> any { }
+fn mobileGallery() -> any { }
+fn mobileGps() -> map { }
+fn mobilePushToken() -> str { }
+fn mobileShare(content: map) -> nil { }
+fn mobileBiometric(fn: any) -> nil { }

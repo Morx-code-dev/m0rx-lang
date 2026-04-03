@@ -1,0 +1,137 @@
+// M0RX Main Library - AI/ML
+// Uses ONNX + Ollama + HuggingFace + OpenRouter
+
+// ===== LLM - Local =====
+fn llmLoad(model: str) -> any { }
+fn llmChat(llm: any, messages: list) -> str { }
+fn llmComplete(llm: any, prompt: str) -> str { }
+fn llmStream(llm: any, prompt: str, fn: any) -> nil { }
+fn llmEmbed(llm: any, text: str) -> list { }
+fn llmTokenize(llm: any, text: str) -> list { }
+fn llmTokenCount(llm: any, text: str) -> ant { }
+fn llmUnload(llm: any) -> nil { }
+fn llmListModels() -> list { }
+fn llmPull(modelName: str) -> bool { }
+
+// ===== LLM - Cloud =====
+fn cloudLlmCreate(provider: str, apiKey: str) -> any { }
+fn cloudLlmChat(client: any, model: str, messages: list) -> str { }
+fn cloudLlmStream(client: any, model: str, messages: list, fn: any) -> nil { }
+fn cloudLlmEmbed(client: any, model: str, text: str) -> list { }
+fn cloudLlmModels(client: any) -> list { }
+
+// ===== OpenAI =====
+fn openaiInit(apiKey: str) -> any { }
+fn openaiChatComplete(client: any, messages: list, model: str) -> str { }
+fn openaiStreamChat(client: any, messages: list, model: str, fn: any) -> nil { }
+fn openaiEmbedText(client: any, text: str) -> list { }
+fn openaiImageGen(client: any, prompt: str, size: str) -> str { }
+fn openaiWhisper(client: any, audioPath: str) -> str { }
+fn openaiTts(client: any, text: str, voice: str) -> blob { }
+
+// ===== Anthropic =====
+fn anthropicInit(apiKey: str) -> any { }
+fn anthropicMessage(client: any, messages: list, model: str) -> str { }
+fn anthropicStream(client: any, messages: list, model: str, fn: any) -> nil { }
+
+// ===== OpenRouter =====
+fn openrouterInit(apiKey: str) -> any { }
+fn openrouterChat(client: any, model: str, messages: list) -> str { }
+fn openrouterStream(client: any, model: str, messages: list, fn: any) -> nil { }
+fn openrouterListModels(client: any) -> list { }
+fn openrouterFreeModels(client: any) -> list { }
+
+// ===== Tensor Engine =====
+fn tensorCreate(data: list, shape: list) -> any { }
+fn tensorFromList(data: list) -> any { }
+fn tensorShape(t: any) -> list { }
+fn tensorReshape(t: any, shape: list) -> any { }
+fn tensorAdd(a: any, b: any) -> any { }
+fn tensorMul(a: any, b: any) -> any { }
+fn tensorMatmul(a: any, b: any) -> any { }
+fn tensorTranspose(t: any) -> any { }
+fn tensorSoftmax(t: any) -> any { }
+fn tensorSigmoid(t: any) -> any { }
+fn tensorRelu(t: any) -> any { }
+fn tensorMean(t: any) -> dbl { }
+fn tensorSum(t: any) -> dbl { }
+fn tensorNorm(t: any) -> dbl { }
+fn tensorToList(t: any) -> list { }
+fn tensorSave(t: any, path: str) -> bool { }
+fn tensorLoad(path: str) -> any { }
+fn tensorGpu(t: any) -> any { }
+fn tensorCpu(t: any) -> any { }
+
+// ===== Neural Network =====
+fn nnCreate() -> any { }
+fn nnAddLayer(net: any, type: str, config: map) -> nil { }
+fn nnCompile(net: any, optimizer: str, loss: str) -> nil { }
+fn nnTrain(net: any, xData: any, yData: any, epochs: ant, batchSize: ant) -> map { }
+fn nnPredict(net: any, input: any) -> any { }
+fn nnEvaluate(net: any, xTest: any, yTest: any) -> map { }
+fn nnSave(net: any, path: str) -> bool { }
+fn nnLoad(path: str) -> any { }
+fn nnSummary(net: any) -> str { }
+
+// ===== Training Pipeline =====
+fn pipelineCreate(steps: list) -> any { }
+fn pipelineFit(pipeline: any, data: any) -> any { }
+fn pipelineTransform(pipeline: any, data: any) -> any { }
+fn pipelinePredict(pipeline: any, data: any) -> any { }
+fn pipelineSave(pipeline: any, path: str) -> bool { }
+fn pipelineLoad(path: str) -> any { }
+
+// ===== RAG System =====
+fn ragCreate(vectorDb: any, llm: any) -> any { }
+fn ragAddDocs(rag: any, docs: list) -> nil { }
+fn ragAddFile(rag: any, path: str) -> nil { }
+fn ragAddUrl(rag: any, url: str) -> nil { }
+fn ragQuery(rag: any, question: str) -> str { }
+fn ragQueryWithSources(rag: any, question: str) -> map { }
+fn ragClear(rag: any) -> nil { }
+fn ragSetChunkSize(rag: any, size: ant) -> nil { }
+fn ragSetTopK(rag: any, k: ant) -> nil { }
+
+// ===== Embeddings =====
+fn embedCreate(model: str) -> any { }
+fn embedText(engine: any, text: str) -> list { }
+fn embedBatch(engine: any, texts: list) -> list { }
+fn embedSimilarity(a: list, b: list) -> dbl { }
+fn embedSearch(engine: any, query: str, docs: list, topK: ant) -> list { }
+
+// ===== Computer Vision =====
+fn cvLoad(modelName: str) -> any { }
+fn cvDetect(model: any, img: any) -> list { }
+fn cvClassify(model: any, img: any) -> map { }
+fn cvSegment(model: any, img: any) -> any { }
+fn cvFaceDetect(img: any) -> list { }
+fn cvFaceRecognize(img: any, known: list) -> str { }
+fn cvObjectTrack(model: any, video: any, fn: any) -> nil { }
+fn cvPoseEstimate(img: any) -> map { }
+fn cvOcr(img: any, lang: str) -> str { }
+fn cvDepthEstimate(img: any) -> any { }
+
+// ===== NLP =====
+fn nlpTokenize(text: str, lang: str) -> list { }
+fn nlpPos(text: str, lang: str) -> list { }
+fn nlpNer(text: str, lang: str) -> list { }
+fn nlpSentiment(text: str) -> map { }
+fn nlpSummarize(text: str, maxLen: ant) -> str { }
+fn nlpTranslate(text: str, from: str, to: str) -> str { }
+fn nlpKeywords(text: str, topK: ant) -> list { }
+fn nlpSimilarity(a: str, b: str) -> dbl { }
+fn nlpClassify(text: str, labels: list) -> map { }
+fn nlpQa(context: str, question: str) -> str { }
+
+// ===== AutoML =====
+fn automlTrain(xData: any, yData: any, task: str) -> any { }
+fn automlPredict(model: any, input: any) -> any { }
+fn automlBestModel(xData: any, yData: any) -> map { }
+fn automlFeatureImportance(model: any) -> map { }
+
+// ===== Fine-tuning =====
+fn finetuneCreate(baseModel: str, config: map) -> any { }
+fn finetuneAddData(ft: any, data: list) -> nil { }
+fn finetuneRun(ft: any) -> any { }
+fn finetuneSave(ft: any, path: str) -> bool { }
+fn finetuneLoad(path: str) -> any { }
