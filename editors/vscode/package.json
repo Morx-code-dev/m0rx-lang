@@ -1,38 +1,64 @@
 {
   "name": "m0rx-language",
   "displayName": "M0RX Language",
-  "description": "M0RX language support for VS Code",
+  "description": "M0RX — Next-gen compiled language for AI era. Syntax highlighting, snippets, themes and language support.",
   "version": "0.1.0",
-  "publisher": "morx-code-dev",
+  "publisher": "morx-lang",
   "icon": "logo.png",
-  "engines": { "vscode": "^1.80.0" },
-  "categories": ["Programming Languages"],
-  "keywords": ["m0rx", "mrx", "language", "ai"],
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Themes"
+  ],
+  "keywords": [
+    "m0rx", "mrx", "language", "ai", "backend",
+    "compiler", "syntax", "highlighting"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Morx-code-dev/m0rx-lang"
   },
+  "bugs": {
+    "url": "https://github.com/Morx-code-dev/m0rx-lang/issues"
+  },
+  "homepage": "https://github.com/Morx-code-dev/m0rx-lang#readme",
+  "license": "MIT",
   "contributes": {
-    "languages": [{
-      "id": "m0rx",
-      "aliases": ["M0RX", "m0rx"],
-      "extensions": [".mrx"],
-      "configuration": "./language-configuration.json",
-      "icon": {
-        "light": "./logo.png",
-        "dark": "./logo.png"
+    "languages": [
+      {
+        "id": "m0rx",
+        "aliases": ["M0RX", "m0rx", "mrx"],
+        "extensions": [".mrx"],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./logo.png",
+          "dark": "./logo.png"
+        }
       }
-    }],
-    "grammars": [{
-      "language": "m0rx",
-      "scopeName": "source.m0rx",
-      "path": "./syntaxes/m0rx.tmLanguage.json"
-    }],
-    "themes": [{
-      "label": "M0RX Dark",
-      "uiTheme": "vs-dark",
-      "path": "./themes/m0rx-dark.json"
-    }]
+    ],
+    "grammars": [
+      {
+        "language": "m0rx",
+        "scopeName": "source.m0rx",
+        "path": "./syntaxes/m0rx.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "m0rx",
+        "path": "./snippets/m0rx.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "M0RX Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/m0rx-dark.json"
+      }
+    ]
   },
   "main": "./extension.js"
 }

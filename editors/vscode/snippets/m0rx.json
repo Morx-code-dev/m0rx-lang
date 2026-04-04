@@ -1,0 +1,92 @@
+{
+  "M0RX Function": {
+    "prefix": "fn",
+    "body": ["fn ${1:name}(${2:params}) -> ${3:nil} {", "    ${4:}", "}"],
+    "description": "M0RX function"
+  },
+  "M0RX Class": {
+    "prefix": "class",
+    "body": ["class ${1:Name} {", "    let ${2:field}: ${3:str} = ${4:\"\"}", "", "    fn ${5:method}() -> nil {", "        ${6:}", "    }", "}"],
+    "description": "M0RX class"
+  },
+  "M0RX If": {
+    "prefix": "if",
+    "body": ["if ${1:condition} {", "    ${2:}", "}"],
+    "description": "M0RX if"
+  },
+  "M0RX If Else": {
+    "prefix": "ife",
+    "body": ["if ${1:condition} {", "    ${2:}", "} else {", "    ${3:}", "}"],
+    "description": "M0RX if-else"
+  },
+  "M0RX Each Loop": {
+    "prefix": "each",
+    "body": ["each ${1:item} in ${2:list} {", "    ${3:}", "}"],
+    "description": "M0RX each loop"
+  },
+  "M0RX While Loop": {
+    "prefix": "while",
+    "body": ["while ${1:condition} {", "    ${2:}", "}"],
+    "description": "M0RX while"
+  },
+  "M0RX Loop": {
+    "prefix": "loop",
+    "body": ["loop {", "    ${1:}", "    if ${2:done} { break }", "}"],
+    "description": "M0RX loop"
+  },
+  "M0RX Let": {
+    "prefix": "let",
+    "body": ["let ${1:name}: ${2:str} = ${3:\"\"}"],
+    "description": "M0RX variable"
+  },
+  "M0RX Try Catch": {
+    "prefix": "try",
+    "body": ["try {", "    ${1:}", "} catch ${2:err} {", "    showln(${2:err})", "}"],
+    "description": "M0RX try-catch"
+  },
+  "M0RX Match": {
+    "prefix": "match",
+    "body": ["match ${1:value} {", "    ${2:pattern} => { ${3:} }", "}"],
+    "description": "M0RX match"
+  },
+  "M0RX Show": {
+    "prefix": "show",
+    "body": ["showln(${1:\"Hello M0RX!\"})"],
+    "description": "M0RX print"
+  },
+  "M0RX API Server": {
+    "prefix": "server",
+    "body": [
+      "use m0rx.backend",
+      "",
+      "let app: any = appCreate()",
+      "appUse(app, middlewareCors([\"*\"]))",
+      "appUse(app, middlewareBody())",
+      "",
+      "routeGet(app, \"/\", fn(req: any, res: any) -> nil {",
+      "    resJson(res, {\"message\": \"${1:Hello M0RX!\"})",
+      "})",
+      "",
+      "appListen(app, ${2:8080})",
+      "showln(\"Server running on port ${2:8080}\")"
+    ],
+    "description": "M0RX API Server"
+  },
+  "M0RX AI Chat": {
+    "prefix": "ai",
+    "body": [
+      "use m0rx.ai",
+      "",
+      "let llm: any = llmLoad(\"${1:llama3}\")",
+      "let messages: list = [{\"role\": \"user\", \"content\": \"${2:Hello!}\"}]",
+      "let reply: str = llmChat(llm, messages)",
+      "showln(reply)"
+    ],
+    "description": "M0RX AI Chat"
+  },
+  "M0RX Hello World": {
+    "prefix": "hello",
+    "body": ["showln(\"Hello M0RX!\")"],
+    "description": "Hello World"
+  }
+}
