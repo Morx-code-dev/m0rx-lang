@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language id="m0rx" name="M0RX" version="2.0" _section="Sources">
+  <metadata>
+    <property name="globs">*.mrx</property>
+    <property name="line-comment-start">//</property>
+  </metadata>
+  <styles>
+    <style id="keyword" name="Keyword" map-to="def:keyword"/>
+    <style id="type" name="Type" map-to="def:type"/>
+    <style id="string" name="String" map-to="def:string"/>
+    <style id="comment" name="Comment" map-to="def:comment"/>
+    <style id="number" name="Number" map-to="def:number"/>
+  </styles>
+  <definitions>
+    <context id="m0rx">
+      <include>
+        <context id="comment" style-ref="comment">
+          <start>//</start><end>$</end>
+        </context>
+        <context id="string" style-ref="string">
+          <start>"</start><end>"</end>
+        </context>
+        <context id="keywords" style-ref="keyword">
+          <keyword>if</keyword><keyword>else</keyword>
+          <keyword>fn</keyword><keyword>class</keyword>
+          <keyword>let</keyword><keyword>while</keyword>
+          <keyword>each</keyword><keyword>give</keyword>
+          <keyword>async</keyword><keyword>await</keyword>
+          <keyword>try</keyword><keyword>catch</keyword>
+        </context>
+        <context id="types" style-ref="type">
+          <keyword>ant</keyword><keyword>str</keyword>
+          <keyword>dbl</keyword><keyword>bool</keyword>
+          <keyword>list</keyword><keyword>map</keyword>
+          <keyword>tiny</keyword><keyword>long</keyword>
+        </context>
+      </include>
+    </context>
+  </definitions>
+</language>

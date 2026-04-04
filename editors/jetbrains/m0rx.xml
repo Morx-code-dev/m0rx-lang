@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fileType name="M0RX"
+          description="M0RX Language File"
+          icon="logo.png"
+          version="1"
+          defaultExtension="mrx">
+  <highlighting>
+    <keywords ignoreCase="false">
+      <keyword>if</keyword><keyword>else</keyword>
+      <keyword>elif</keyword><keyword>match</keyword>
+      <keyword>when</keyword><keyword>loop</keyword>
+      <keyword>while</keyword><keyword>each</keyword>
+      <keyword>break</keyword><keyword>skip</keyword>
+      <keyword>give</keyword><keyword>halt</keyword>
+      <keyword>fn</keyword><keyword>method</keyword>
+      <keyword>class</keyword><keyword>trait</keyword>
+      <keyword>impl</keyword><keyword>let</keyword>
+      <keyword>fix</keyword><keyword>bind</keyword>
+      <keyword>async</keyword><keyword>await</keyword>
+      <keyword>spawn</keyword><keyword>try</keyword>
+      <keyword>catch</keyword><keyword>panic</keyword>
+      <keyword>model</keyword><keyword>infer</keyword>
+      <keyword>embed</keyword><keyword>predict</keyword>
+      <keyword>mod</keyword><keyword>use</keyword>
+    </keywords>
+    <keywords2>
+      <keyword>tiny</keyword><keyword>short</keyword>
+      <keyword>ant</keyword><keyword>long</keyword>
+      <keyword>vast</keyword><keyword>half</keyword>
+      <keyword>dbl</keyword><keyword>precise</keyword>
+      <keyword>str</keyword><keyword>txt</keyword>
+      <keyword>bool</keyword><keyword>nil</keyword>
+      <keyword>list</keyword><keyword>map</keyword>
+      <keyword>set</keyword><keyword>blob</keyword>
+      <keyword>tensor</keyword><keyword>any</keyword>
+    </keywords2>
+    <keywords3>
+      <keyword>true</keyword><keyword>false</keyword>
+      <keyword>null</keyword><keyword>void</keyword>
+    </keywords3>
+  </highlighting>
+  <commenter lineCommentPrefix="//" blockCommentPrefix="/*" blockCommentSuffix="*/"/>
+</fileType>

@@ -1,0 +1,7 @@
+{
+  "name": "M0RX",
+  "extensions": ["mrx"],
+  "line_comment": "//",
+  "block_comment": ["/*", "*/"],
+  "tab_size": 4
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<language name="M0RX" section="Sources" extensions="*.mrx" mimetype="text/x-m0rx">
+  <highlighting>
+    <list name="keywords">
+      <item>if</item><item>else</item><item>elif</item>
+      <item>fn</item><item>class</item><item>let</item>
+      <item>while</item><item>each</item><item>give</item>
+      <item>async</item><item>await</item><item>try</item>
+      <item>catch</item><item>panic</item><item>mod</item>
+      <item>use</item><item>match</item><item>loop</item>
+    </list>
+    <list name="types">
+      <item>ant</item><item>str</item><item>dbl</item>
+      <item>bool</item><item>list</item><item>map</item>
+      <item>tiny</item><item>long</item><item>vast</item>
+      <item>half</item><item>precise</item><item>nil</item>
+    </list>
+    <contexts>
+      <context name="Normal">
+        <keyword attribute="Keyword" context="#stay" String="keywords"/>
+        <keyword attribute="DataType" context="#stay" String="types"/>
+        <DetectSpaces/>
+        <Int attribute="Decimal"/>
+        <Float attribute="Float"/>
+        <StringDetect attribute="Comment" String="//" context="Comment"/>
+        <DetectChar attribute="String" char="&quot;" context="String"/>
+      </context>
+      <context name="Comment" lineEndContext="#pop">
+        <IncludeRules context="##Comments"/>
+      </context>
+      <context name="String" attribute="String" lineEndContext="#pop">
+        <DetectChar attribute="String" char="&quot;" context="#pop"/>
+      </context>
+    </contexts>
+  </highlighting>
+</language>

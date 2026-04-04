@@ -1,0 +1,9 @@
+{
+  "name": "language-m0rx",
+  "version": "0.1.0",
+  "description": "M0RX language support for Atom",
+  "keywords": ["m0rx", "language"],
+  "engines": { "atom": ">=1.0.0" },
+  "main": "./lib/main",
+  "activationCommands": {}
+}

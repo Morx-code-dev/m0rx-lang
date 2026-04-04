@@ -1,0 +1,6 @@
+[[language]]
+name = "m0rx"
+scope = "source.m0rx"
+file-types = ["mrx"]
+comment-token = "//"
+indent = { tab-width = 4, unit = "    " }

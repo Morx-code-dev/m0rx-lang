@@ -1,0 +1,7 @@
+[language]
+name = "M0RX"
+extensions = ["mrx"]
+line_comment = "//"
+block_comment_start = "/*"
+block_comment_end = "*/"
+indent = "    "

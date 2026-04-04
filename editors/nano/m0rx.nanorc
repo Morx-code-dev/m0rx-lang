@@ -1,0 +1,10 @@
+## M0RX Language Syntax for Nano
+syntax "m0rx" "\.mrx$"
+color brightblue "\\b(if|else|elif|match|when|loop|while|each|break|skip|give|halt)\\b"
+color brightblue "\\b(fn|method|class|trait|impl|let|fix|bind|mod|use|async|await)\\b"
+color brightcyan "\\b(tiny|short|ant|long|vast|half|dbl|precise|str|txt|bool|nil|list|map|set)\\b"
+color brightyellow "\\b(true|false|null|void)\\b"
+color brightgreen "\"[^\"]*\""
+color brightred "//.*$"
+color brightred start="/\*" end="\*/"
+color brightmagenta "\\b[0-9]+(\\.[0-9]+)?\\b"

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+  <extension point="org.eclipse.core.contenttype.contentTypes">
+    <content-type id="m0rx.contenttype"
+      name="M0RX Source File"
+      file-extensions="mrx"
+      priority="normal"/>
+  </extension>
+</plugin>
