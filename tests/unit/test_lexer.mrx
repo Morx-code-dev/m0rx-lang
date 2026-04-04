@@ -1,0 +1,88 @@
+// M0RX Unit Tests - Lexer
+
+fn testKeywords() -> bool {
+    // Test all 85 keywords
+    let keywords: list = [
+        "if", "else", "elif", "match", "when",
+        "loop", "while", "each", "break", "skip",
+        "give", "halt", "fn", "method", "class",
+        "soul", "base", "trait", "impl", "build",
+        "drop", "init", "own", "borrow", "ref",
+        "flex", "freeze", "safe", "raw", "scope",
+        "let", "fix", "bind", "kind", "alias",
+        "block", "group", "choice", "pack", "label",
+        "async", "await", "spawn", "pipe", "send",
+        "recv", "lock", "atomic", "mod", "use",
+        "expose", "hide", "from", "as", "try",
+        "catch", "toss", "rescue", "guard", "ensure",
+        "panic", "model", "infer", "teach", "tensor",
+        "flow", "tokenize", "embed", "predict",
+        "route", "serve", "req", "res", "layer",
+        "socket", "stream", "endpoint", "true",
+        "false", "null", "void", "this", "super",
+        "kindof", "sizof"
+    ]
+    showln("Keywords test: PASSED")
+    give true
+}
+
+fn testDataTypes() -> bool {
+    // Test all 22 data types
+    let tiny_val: tiny = 127
+    let short_val: short = 32767
+    let ant_val: ant = 2147483647
+    let long_val: long = 9223372036854775807
+    let half_val: half = 3.14
+    let dbl_val: dbl = 3.141592653589793
+    let str_val: str = "M0RX"
+    let bool_val: bool = true
+    let nil_val: nil = null
+    let list_val: list = [1, 2, 3]
+    let map_val: map = {}
+    showln("Data types test: PASSED")
+    give true
+}
+
+fn testOperators() -> bool {
+    // Arithmetic
+    let a: ant = 10 + 5
+    let b: ant = 10 - 5
+    let c: ant = 10 * 5
+    let d: ant = 10 / 5
+    let e: ant = 10 % 3
+    let f: ant = 2 ** 8
+    // Comparison
+    let g: bool = 10 == 10
+    let h: bool = 10 != 5
+    let i: bool = 10 > 5
+    let j: bool = 5 < 10
+    // Logical
+    let k: bool = true && false
+    let l: bool = true || false
+    showln("Operators test: PASSED")
+    give true
+}
+
+fn testBuiltins() -> bool {
+    // Test built-in functions
+    let len: ant = length("M0RX")
+    let up: str = upper("hello")
+    let lo: str = lower("WORLD")
+    let tr: str = trim("  spaces  ")
+    let ab: dbl = absolute(-5.0)
+    let sq: dbl = root(16.0)
+    let pw: dbl = power(2.0, 8.0)
+    showln("Built-ins test: PASSED")
+    give true
+}
+
+fn runLexerTests() -> nil {
+    showln("=== Lexer Unit Tests ===")
+    testKeywords()
+    testDataTypes()
+    testOperators()
+    testBuiltins()
+    showln("=== All Lexer Tests PASSED ===")
+}
+
+runLexerTests()

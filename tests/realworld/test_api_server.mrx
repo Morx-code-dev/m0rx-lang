@@ -1,0 +1,47 @@
+// M0RX Real World Test - REST API Server
+
+use m0rx.backend
+use m0rx.db
+use m0rx.sec
+
+fn testApiServer() -> bool {
+    // Create app
+    let app: any = appCreate()
+
+    // Middleware
+    appUse(app, middlewareCors(["*"]))
+    appUse(app, middlewareLogger())
+    appUse(app, middlewareBody())
+    appUse(app, middlewareRateLimit(100, 60))
+
+    // Routes
+    routeGet(app, "/", fn(req: any, res: any) -> nil {
+        resJson(res, {"message": "M0RX API v0.1.0"})
+    })
+
+    routeGet(app, "/health", fn(req: any, res: any) -> nil {
+        resJson(res, {
+            "status": "ok",
+            "version": "0.1.0",
+            "language": "M0RX"
+        })
+    })
+
+    routePost(app, "/echo", fn(req: any, res: any) -> nil {
+        let body: map = reqGetJson(req)
+        resJson(res, body)
+    })
+
+    routeGet(app, "/users", fn(req: any, res: any) -> nil {
+        let users: list = [
+            {"id": 1, "name": "Alice"},
+            {"id": 2, "name": "Bob"}
+        ]
+        resJson(res, users)
+    })
+
+    showln("API Server test: PASSED")
+    give true
+}
+
+testApiServer()

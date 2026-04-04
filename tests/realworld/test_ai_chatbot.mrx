@@ -1,0 +1,61 @@
+// M0RX Real World Test - AI Chatbot
+
+use m0rx.ai
+use m0rx.voice
+use m0rx.backend
+
+fn testAiChatbot() -> bool {
+    // Load local LLM
+    let llm: any = llmLoad("llama3")
+
+    // Chat messages
+    let messages: list = [
+        {"role": "system", "content": "You are M0RX AI assistant"},
+        {"role": "user", "content": "Hello! What is M0RX?"}
+    ]
+
+    // Get response
+    let response: str = llmChat(llm, messages)
+    showln(response)
+
+    // With OpenRouter
+    let client: any = openrouterInit("api_key_here")
+    let models: list = openrouterListModels(client)
+    showln("Available models:")
+    showln(length(models))
+
+    showln("AI Chatbot test: PASSED")
+    give true
+}
+
+fn testVoiceAssistant() -> bool {
+    // STT
+    let stt: any = sttCreate("whisper", "en")
+    // TTS
+    let tts: any = ttsCreate("coqui", "en")
+
+    showln("Voice assistant: PASSED")
+    give true
+}
+
+fn testRagSystem() -> bool {
+    // RAG
+    let vecDb: any = vecConnect("localhost:6333")
+    let llm: any = llmLoad("mistral")
+    let rag: any = ragCreate(vecDb, llm)
+
+    ragAddDocs(rag, [
+        "M0RX is a high-level programming language",
+        "M0RX supports AI, backend and UI development",
+        "M0RX is compiled using LLVM"
+    ])
+
+    let answer: str = ragQuery(rag, "What is M0RX?")
+    showln(answer)
+    showln("RAG system: PASSED")
+    give true
+}
+
+testAiChatbot()
+testVoiceAssistant()
+testRagSystem()

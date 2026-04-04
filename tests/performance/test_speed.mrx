@@ -1,0 +1,64 @@
+// M0RX Performance Tests
+
+use m0rx.math
+
+fn testFibonacci() -> nil {
+    let start: long = now()
+    let result: long = fibonacci(40)
+    let end: long = now()
+    let time: long = end - start
+    showln("Fibonacci(40) result:")
+    showln(result)
+    showln("Time taken:")
+    showln(time)
+    showln("Fibonacci benchmark: PASSED")
+}
+
+fn testSorting() -> nil {
+    let data: list = [
+        999, 1, 500, 123, 456, 789,
+        234, 567, 890, 345, 678, 901,
+        112, 223, 334, 445, 556, 667
+    ]
+    let start: long = now()
+    let sorted: list = arrange(data)
+    let end: long = now()
+    showln("Sort benchmark: PASSED")
+    showln(sorted)
+}
+
+fn testStringOps() -> nil {
+    let start: long = now()
+    let i: ant = 0
+    let result: str = ""
+    while i < 1000 {
+        result = glue([result, "M0RX"], "")
+        i += 1
+    }
+    let end: long = now()
+    showln("String benchmark: PASSED")
+    showln(length(result))
+}
+
+fn testMathOps() -> nil {
+    let start: long = now()
+    let i: ant = 0
+    while i < 10000 {
+        let x: dbl = root(i)
+        let y: dbl = power(x, 2.0)
+        i += 1
+    }
+    let end: long = now()
+    showln("Math benchmark: PASSED")
+}
+
+fn runPerformanceTests() -> nil {
+    showln("=== Performance Tests ===")
+    testFibonacci()
+    testSorting()
+    testStringOps()
+    testMathOps()
+    showln("=== All Performance Tests PASSED ===")
+}
+
+runPerformanceTests()

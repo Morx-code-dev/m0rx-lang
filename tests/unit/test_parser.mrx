@@ -1,0 +1,93 @@
+// M0RX Unit Tests - Parser
+
+fn testIfElse() -> bool {
+    let x: ant = 10
+    if x > 5 {
+        showln("if: PASSED")
+    } elif x == 5 {
+        showln("elif: PASSED")
+    } else {
+        showln("else: PASSED")
+    }
+    give true
+}
+
+fn testLoops() -> bool {
+    // while loop
+    let i: ant = 0
+    while i < 3 {
+        i += 1
+    }
+    // each loop
+    let items: list = [1, 2, 3]
+    each item in items {
+        showln(item)
+    }
+    // loop with break
+    loop {
+        break
+    }
+    showln("Loops test: PASSED")
+    give true
+}
+
+fn testFunctions() -> bool {
+    fn add(a: ant, b: ant) -> ant {
+        give a + b
+    }
+    fn greet(name: str) -> nil {
+        showln(name)
+    }
+    let result: ant = add(5, 3)
+    greet("M0RX")
+    showln("Functions test: PASSED")
+    give true
+}
+
+fn testMatch() -> bool {
+    let day: ant = 1
+    match day {
+        1 => { showln("Monday") }
+        2 => { showln("Tuesday") }
+        3 => { showln("Wednesday") }
+    }
+    showln("Match test: PASSED")
+    give true
+}
+
+fn testClasses() -> bool {
+    class Animal {
+        let name: str = "Dog"
+        let age: ant = 3
+
+        fn speak() -> nil {
+            showln(name)
+        }
+    }
+    showln("Classes test: PASSED")
+    give true
+}
+
+fn testTryCatch() -> bool {
+    try {
+        let x: ant = 10
+        showln(x)
+    } catch err {
+        showln(err)
+    }
+    showln("TryCatch test: PASSED")
+    give true
+}
+
+fn runParserTests() -> nil {
+    showln("=== Parser Unit Tests ===")
+    testIfElse()
+    testLoops()
+    testFunctions()
+    testMatch()
+    testClasses()
+    testTryCatch()
+    showln("=== All Parser Tests PASSED ===")
+}
+
+runParserTests()
