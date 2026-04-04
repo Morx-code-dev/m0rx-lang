@@ -1,0 +1,54 @@
+// M0RX Standard Library - Excel / XLSX
+
+// ===== Workbook =====
+fn xlsxCreate() -> any { }
+fn xlsxLoad(path: str) -> any { }
+fn xlsxSave(wb: any, path: str) -> bool { }
+fn xlsxClose(wb: any) -> nil { }
+fn xlsxSheets(wb: any) -> list { }
+fn xlsxAddSheet(wb: any, name: str) -> any { }
+fn xlsxGetSheet(wb: any, name: str) -> any { }
+fn xlsxDeleteSheet(wb: any, name: str) -> bool { }
+fn xlsxRenameSheet(wb: any, old: str, new: str) -> bool { }
+
+// ===== Read / Write Cells =====
+fn xlsxRead(sheet: any, row: ant, col: ant) -> any { }
+fn xlsxWrite(sheet: any, row: ant, col: ant, value: any) -> nil { }
+fn xlsxReadRow(sheet: any, row: ant) -> list { }
+fn xlsxWriteRow(sheet: any, row: ant, data: list) -> nil { }
+fn xlsxReadCol(sheet: any, col: ant) -> list { }
+fn xlsxWriteCol(sheet: any, col: ant, data: list) -> nil { }
+fn xlsxReadAll(sheet: any) -> list { }
+fn xlsxWriteAll(sheet: any, data: list) -> nil { }
+fn xlsxRowCount(sheet: any) -> ant { }
+fn xlsxColCount(sheet: any) -> ant { }
+
+// ===== Formatting =====
+fn xlsxBold(sheet: any, row: ant, col: ant) -> nil { }
+fn xlsxItalic(sheet: any, row: ant, col: ant) -> nil { }
+fn xlsxFontSize(sheet: any, row: ant, col: ant, size: ant) -> nil { }
+fn xlsxFontColor(sheet: any, row: ant, col: ant, color: str) -> nil { }
+fn xlsxBgColor(sheet: any, row: ant, col: ant, color: str) -> nil { }
+fn xlsxBorder(sheet: any, row: ant, col: ant, style: str) -> nil { }
+fn xlsxAlign(sheet: any, row: ant, col: ant, align: str) -> nil { }
+fn xlsxColWidth(sheet: any, col: ant, width: dbl) -> nil { }
+fn xlsxRowHeight(sheet: any, row: ant, height: dbl) -> nil { }
+fn xlsxMerge(sheet: any, r1: ant, c1: ant, r2: ant, c2: ant) -> nil { }
+
+// ===== Formulas =====
+fn xlsxFormula(sheet: any, row: ant, col: ant, formula: str) -> nil { }
+fn xlsxSum(sheet: any, row: ant, col: ant, range: str) -> nil { }
+fn xlsxAvg(sheet: any, row: ant, col: ant, range: str) -> nil { }
+fn xlsxMax(sheet: any, row: ant, col: ant, range: str) -> nil { }
+fn xlsxMin(sheet: any, row: ant, col: ant, range: str) -> nil { }
+
+// ===== Charts =====
+fn xlsxAddChart(sheet: any, type: str, data: map) -> any { }
+fn xlsxChartTitle(chart: any, title: str) -> nil { }
+fn xlsxChartPosition(chart: any, row: ant, col: ant) -> nil { }
+
+// ===== Import / Export =====
+fn xlsxFromCsv(csvPath: str, sheetName: str) -> any { }
+fn xlsxToCsv(wb: any, sheetName: str, csvPath: str) -> bool { }
+fn xlsxFromJson(data: list, sheetName: str) -> any { }
+fn xlsxToJson(wb: any, sheetName: str) -> list { }
