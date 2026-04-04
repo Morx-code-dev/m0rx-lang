@@ -3,7 +3,7 @@
   "displayName": "M0RX Language",
   "description": "M0RX — Next-gen compiled language for AI era. Syntax highlighting, snippets, themes and language support.",
   "version": "0.1.0",
-  "publisher": "morx-lang",
+  "publisher": "M0RXLanguage",
   "icon": "logo.png",
   "engines": {
     "vscode": "^1.80.0"
