@@ -1,0 +1,111 @@
+{
+  "name": "M0RX",
+  "scopeName": "source.m0rx",
+  "fileTypes": ["mrx"],
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#functions" },
+    { "include": "#operators" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.m0rx",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.m0rx",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.m0rx",
+          "match": "\\b(if|else|elif|match|when|loop|while|each|break|skip|give|halt)\\b"
+        },
+        {
+          "name": "keyword.declaration.m0rx",
+          "match": "\\b(fn|method|class|trait|impl|let|fix|bind|mod|use|from|as|expose|hide)\\b"
+        },
+        {
+          "name": "keyword.memory.m0rx",
+          "match": "\\b(own|borrow|ref|flex|freeze|safe|raw|scope)\\b"
+        },
+        {
+          "name": "keyword.async.m0rx",
+          "match": "\\b(async|await|spawn|send|recv|lock|atomic)\\b"
+        },
+        {
+          "name": "keyword.error.m0rx",
+          "match": "\\b(try|catch|toss|rescue|guard|ensure|panic)\\b"
+        },
+        {
+          "name": "keyword.ai.m0rx",
+          "match": "\\b(model|infer|teach|tensor|flow|tokenize|embed|predict)\\b"
+        },
+        {
+          "name": "keyword.backend.m0rx",
+          "match": "\\b(route|serve|req|res|layer|socket|stream|endpoint)\\b"
+        },
+        {
+          "name": "constant.language.m0rx",
+          "match": "\\b(true|false|null|nil|void)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "storage.type.m0rx",
+          "match": "\\b(tiny|short|ant|long|vast|utiny|ushort|uant|ulong|half|dbl|precise|chr|str|txt|bool|nil|list|map|set|tensor|blob|any)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.m0rx",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.m0rx",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.m0rx",
+          "match": "\\b[0-9]+(\\.[0-9]+)?\\b"
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "entity.name.function.m0rx",
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)(?=\\s*\\()"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.m0rx",
+          "match": "(\\+|-|\\*|/|%|\\*\\*|==|!=|>|<|>=|<=|&&|\\|\\||!!|&|\\||\\^|~|<<|>>|=|\\+=|-=|\\*=|/=|%=|\\|>|<\\||=>|->|\\?\\?|@|::|~>|##|\\.\\.|\\.\\.\\.)"}
+      ]
+    }
+  }
+}

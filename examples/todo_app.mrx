@@ -1,0 +1,48 @@
+// M0RX - Todo App (Full Stack)
+use m0rx.backend
+use m0rx.db
+
+let app: any = appCreate()
+let db: any = dbConnect("sqlite://todos.db")
+
+appUse(app, middlewareCors(["*"]))
+appUse(app, middlewareBody())
+
+// Get all todos
+routeGet(app, "/todos", fn(req: any, res: any) -> nil {
+    let todos: list = dbQuery(db,
+        "SELECT * FROM todos", [])
+    resJson(res, todos)
+})
+
+// Create todo
+routePost(app, "/todos", fn(req: any, res: any) -> nil {
+    let body: map = reqGetJson(req)
+    dbExec(db,
+        "INSERT INTO todos (title, done) VALUES (?, ?)",
+        [body["title"], false])
+    resSetStatus(res, 201)
+    resJson(res, {"created": true})
+})
+
+// Update todo
+routePut(app, "/todos/:id", fn(req: any, res: any) -> nil {
+    let params: map = reqGetParams(req)
+    let body: map = reqGetJson(req)
+    dbExec(db,
+        "UPDATE todos SET done=? WHERE id=?",
+        [body["done"], params["id"]])
+    resJson(res, {"updated": true})
+})
+
+// Delete todo
+routeDelete(app, "/todos/:id", fn(req: any, res: any) -> nil {
+    let params: map = reqGetParams(req)
+    dbExec(db,
+        "DELETE FROM todos WHERE id=?",
+        [params["id"]])
+    resJson(res, {"deleted": true})
+})
+
+appListen(app, 3000)
+showln("M0RX Todo App running on port 3000")

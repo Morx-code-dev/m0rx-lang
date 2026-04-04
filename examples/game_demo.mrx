@@ -1,0 +1,36 @@
+// M0RX - Simple Game Demo
+use m0rx.ui
+
+let game: any = gameCreate({
+    "title": "M0RX Game",
+    "width": 800,
+    "height": 600,
+    "fps": 60
+})
+
+let player: any = gameObject("player")
+let score: ant = 0
+let speed: dbl = 5.0
+
+onUpdate(game, fn(dt: dbl) -> nil {
+    // Game logic here
+    score += 1
+})
+
+onRender(game, fn(canvas: any) -> nil {
+    canvasClear(canvas)
+    canvasDrawRect(canvas, 100.0, 100.0, 50.0, 50.0, "#00ff00")
+    canvasDrawText(canvas, glue(["Score: ", asStr(score)], ""),
+        10.0, 20.0, "16px monospace", "#ffffff")
+})
+
+onKeyDown(game, fn(key: str) -> nil {
+    if key == "ArrowRight" {
+        showln("Moving right")
+    } elif key == "ArrowLeft" {
+        showln("Moving left")
+    }
+})
+
+gameStart(game)
+showln("M0RX Game Started!")

@@ -1,1 +1,3 @@
-showln("Hello M0RX!")
+// M0RX - Hello World
+showln("Hello, M0RX!")
+showln("Next-gen AI era language")

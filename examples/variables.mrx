@@ -1,0 +1,12 @@
+// M0RX - Variables & Types
+let name: str = "M0RX"
+let version: ant = 1
+let score: dbl = 9.5
+let active: bool = true
+let items: list = [1, 2, 3, 4, 5]
+
+showln(name)
+showln(version)
+showln(score)
+showln(active)
+showln(length(items))

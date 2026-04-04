@@ -1,0 +1,32 @@
+// M0RX - REST API Server
+use m0rx.backend
+
+let app: any = appCreate()
+
+appUse(app, middlewareCors(["*"]))
+appUse(app, middlewareLogger())
+appUse(app, middlewareBody())
+
+routeGet(app, "/", fn(req: any, res: any) -> nil {
+    resJson(res, {
+        "message": "Welcome to M0RX API!",
+        "version": "0.1.0",
+        "language": "M0RX"
+    })
+})
+
+routeGet(app, "/health", fn(req: any, res: any) -> nil {
+    resJson(res, {"status": "ok"})
+})
+
+routePost(app, "/users", fn(req: any, res: any) -> nil {
+    let body: map = reqGetJson(req)
+    resSetStatus(res, 201)
+    resJson(res, {
+        "created": true,
+        "user": body
+    })
+})
+
+appListen(app, 8080)
+showln("M0RX Server running on port 8080")

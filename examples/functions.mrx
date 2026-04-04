@@ -1,0 +1,24 @@
+// M0RX - Functions
+
+fn add(a: ant, b: ant) -> ant {
+    give a + b
+}
+
+fn greet(name: str) -> nil {
+    showln(glue(["Hello, ", name, "!"], ""))
+}
+
+fn fibonacci(n: ant) -> long {
+    if n <= 1 {
+        give n
+    }
+    give fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+let result: ant = add(10, 20)
+showln(result)
+
+greet("M0RX")
+
+let fib: long = fibonacci(10)
+showln(fib)

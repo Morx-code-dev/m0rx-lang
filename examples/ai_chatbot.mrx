@@ -1,0 +1,32 @@
+// M0RX - AI Chatbot
+use m0rx.ai
+use m0rx.voice
+
+// Local LLM
+let llm: any = llmLoad("llama3")
+
+// Voice
+let stt: any = sttCreate("whisper", "en")
+let tts: any = ttsCreate("coqui", "en")
+
+showln("M0RX AI Assistant Ready!")
+showln("Speak or type your message...")
+
+fn chat(userInput: str) -> str {
+    let messages: list = [
+        {"role": "system", "content": "You are M0RX AI assistant"},
+        {"role": "user", "content": userInput}
+    ]
+    let response: str = llmChat(llm, messages)
+    give response
+}
+
+fn voiceChat() -> nil {
+    let audio: str = sttFromMic(stt, 5)
+    let reply: str = chat(audio)
+    ttsSpeak(tts, reply)
+    showln(reply)
+}
+
+let reply: str = chat("What is M0RX programming language?")
+showln(reply)
