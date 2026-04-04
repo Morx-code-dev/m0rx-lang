@@ -1,0 +1,28 @@
+// M0RX Standard Library - File System
+fn fopen(path: str, mode: str) -> any { }
+fn fread(path: str) -> str { }
+fn freadBytes(path: str) -> blob { }
+fn fwrite(path: str, content: str) -> bool { }
+fn fwriteBytes(path: str, data: blob) -> bool { }
+fn fappend(path: str, content: str) -> bool { }
+fn fclose(handle: any) -> nil { }
+fn fcheck(path: str) -> bool { }
+fn fdrop(path: str) -> bool { }
+fn fcopy(src: str, dst: str) -> bool { }
+fn fmove(src: str, dst: str) -> bool { }
+fn fsize(path: str) -> long { }
+fn finfo(path: str) -> map { }
+fn streamOpen(path: str) -> any { }
+fn streamRead(handle: any, size: ant) -> blob { }
+fn streamWrite(handle: any, data: blob) -> ant { }
+fn streamSeek(handle: any, pos: long) -> nil { }
+fn streamClose(handle: any) -> nil { }
+fn watchFile(path: str, fn: any) -> any { }
+fn watchDir(path: str, fn: any) -> any { }
+fn stopWatch(watcher: any) -> nil { }
+fn tempFile() -> str { }
+fn tempDir() -> str { }
+fn readLines(path: str) -> list { }
+fn writeLines(path: str, lines: list) -> bool { }
+fn readCsv(path: str) -> list { }
+fn writeCsv(path: str, data: list) -> bool { }

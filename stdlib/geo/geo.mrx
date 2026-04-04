@@ -1,0 +1,20 @@
+// M0RX Standard Library - Geo & Maps
+fn gpsGetLocation() -> map { }
+fn gpsWatch(fn: any) -> any { }
+fn gpsStop(watcher: any) -> nil { }
+fn gpsDistance(a: map, b: map) -> dbl { }
+fn gpsBearing(from: map, to: map) -> dbl { }
+fn geocode(address: str) -> map { }
+fn reverseGeocode(lat: dbl, lng: dbl) -> str { }
+fn mapCreate(center: map, zoom: ant) -> any { }
+fn mapAddMarker(m: any, lat: dbl, lng: dbl, label: str) -> nil { }
+fn mapAddRoute(m: any, points: list) -> nil { }
+fn mapRender(m: any) -> str { }
+fn routePlan(from: map, to: map, mode: str) -> map { }
+fn routeDistance(route: map) -> dbl { }
+fn routeDuration(route: map) -> ant { }
+fn isInBounds(point: map, bounds: map) -> bool { }
+fn boundingBox(points: list) -> map { }
+fn geoJsonParse(data: str) -> any { }
+fn geoJsonStringify(geo: any) -> str { }
+fn timezoneFromCoords(lat: dbl, lng: dbl) -> str { }

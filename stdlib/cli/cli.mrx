@@ -1,0 +1,21 @@
+// M0RX Standard Library - CLI Builder
+fn cliCreate(name: str, version: str) -> any { }
+fn cliCommand(app: any, name: str, desc: str, fn: any) -> nil { }
+fn cliFlag(app: any, name: str, short: str, desc: str, default: any) -> nil { }
+fn cliArg(app: any, name: str, desc: str) -> nil { }
+fn cliRun(app: any, args: list) -> nil { }
+fn cliHelp(app: any) -> str { }
+fn colorRed(text: str) -> str { }
+fn colorGreen(text: str) -> str { }
+fn colorBlue(text: str) -> str { }
+fn colorYellow(text: str) -> str { }
+fn colorCyan(text: str) -> str { }
+fn colorBold(text: str) -> str { }
+fn spinnerStart(msg: str) -> any { }
+fn spinnerStop(sp: any, msg: str) -> nil { }
+fn progressBar(total: ant, current: ant, width: ant) -> str { }
+fn tableRender(headers: list, rows: list) -> str { }
+fn promptInput(question: str) -> str { }
+fn promptConfirm(question: str) -> bool { }
+fn promptSelect(question: str, options: list) -> str { }
+fn promptPassword(question: str) -> str { }

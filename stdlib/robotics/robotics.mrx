@@ -1,0 +1,23 @@
+// M0RX Standard Library - Robotics
+fn robotCreate(config: map) -> any { }
+fn robotConnect(robot: any, port: str) -> bool { }
+fn robotDisconnect(robot: any) -> nil { }
+fn motorInit(pin: ant, type: str) -> any { }
+fn motorSpeed(motor: any, speed: dbl) -> nil { }
+fn motorStop(motor: any) -> nil { }
+fn motorDirection(motor: any, dir: str) -> nil { }
+fn servoInit(pin: ant) -> any { }
+fn servoAngle(servo: any, angle: dbl) -> nil { }
+fn servoSweep(servo: any, from: dbl, to: dbl, speed: dbl) -> nil { }
+fn sensorUltrasonic(trigPin: ant, echoPin: ant) -> dbl { }
+fn sensorIr(pin: ant) -> bool { }
+fn sensorColor(pin: any) -> map { }
+fn sensorGyro() -> map { }
+fn sensorMag() -> map { }
+fn lidarScan() -> list { }
+fn cameraCapture() -> any { }
+fn rosPublish(topic: str, msg: any) -> nil { }
+fn rosSubscribe(topic: str, fn: any) -> nil { }
+fn pathPlan(start: map, end: map, obstacles: list) -> list { }
+fn pidCreate(kp: dbl, ki: dbl, kd: dbl) -> any { }
+fn pidUpdate(pid: any, target: dbl, current: dbl) -> dbl { }

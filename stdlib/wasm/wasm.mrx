@@ -1,0 +1,13 @@
+// M0RX Standard Library - WebAssembly
+fn wasmCompile(path: str) -> blob { }
+fn wasmLoad(bytes: blob) -> any { }
+fn wasmRun(module: any, fn: str, args: list) -> any { }
+fn wasmExport(module: any, name: str) -> any { }
+fn wasmImport(module: any, name: str, fn: any) -> nil { }
+fn wasmMemory(module: any) -> blob { }
+fn wasmMemoryGrow(module: any, pages: ant) -> ant { }
+fn wasmTable(module: any) -> any { }
+fn wasmInstance(module: any, imports: map) -> any { }
+fn wasmValidate(bytes: blob) -> bool { }
+fn wasmToJs(value: any) -> str { }
+fn wasmFromJs(js: str) -> any { }

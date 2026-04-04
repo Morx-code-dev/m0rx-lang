@@ -1,0 +1,37 @@
+// M0RX - Voice Assistant
+use m0rx.ai
+use m0rx.voice
+
+let stt: any = sttCreate("whisper", "en")
+let tts: any = ttsCreate("coqui", "en")
+let llm: any = llmLoad("llama3")
+
+showln("M0RX Voice Assistant Ready!")
+showln("Listening...")
+
+fn listen() -> str {
+    let audio: str = sttFromMic(stt, 5)
+    give audio
+}
+
+fn think(input: str) -> str {
+    let messages: list = [
+        {"role": "system", "content": "You are M0RX voice assistant"},
+        {"role": "user", "content": input}
+    ]
+    give llmChat(llm, messages)
+}
+
+fn speak(text: str) -> nil {
+    ttsSpeak(tts, text)
+    showln(text)
+}
+
+loop {
+    let input: str = listen()
+    if input == "quit" {
+        halt
+    }
+    let reply: str = think(input)
+    speak(reply)
+}

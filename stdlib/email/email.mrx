@@ -1,0 +1,18 @@
+// M0RX Standard Library - Email
+fn smtpConnect(host: str, port: ant, user: str, pass: str) -> any { }
+fn smtpSend(conn: any, msg: map) -> bool { }
+fn smtpClose(conn: any) -> nil { }
+fn emailCreate(to: str, subject: str, body: str) -> map { }
+fn emailHtml(to: str, subject: str, html: str) -> map { }
+fn emailAttach(msg: map, path: str) -> map { }
+fn emailCc(msg: map, addr: str) -> map { }
+fn emailBcc(msg: map, addr: str) -> map { }
+fn emailFrom(msg: map, addr: str) -> map { }
+fn imapConnect(host: str, port: ant, user: str, pass: str) -> any { }
+fn imapInbox(conn: any) -> list { }
+fn imapRead(conn: any, id: ant) -> map { }
+fn imapDelete(conn: any, id: ant) -> bool { }
+fn imapMove(conn: any, id: ant, folder: str) -> bool { }
+fn imapSearch(conn: any, query: str) -> list { }
+fn imapClose(conn: any) -> nil { }
+fn templateEmail(template: str, vars: map) -> str { }

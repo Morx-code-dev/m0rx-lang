@@ -1,0 +1,23 @@
+// M0RX Standard Library - Testing Framework
+fn testSuite(name: str) -> any { }
+fn testCase(suite: any, name: str, fn: any) -> nil { }
+fn testRun(suite: any) -> map { }
+fn assertEqual(a: any, b: any) -> bool { }
+fn assertNotEqual(a: any, b: any) -> bool { }
+fn assertTrue(val: bool) -> bool { }
+fn assertFalse(val: bool) -> bool { }
+fn assertNil(val: any) -> bool { }
+fn assertNotNil(val: any) -> bool { }
+fn assertGreater(a: any, b: any) -> bool { }
+fn assertLess(a: any, b: any) -> bool { }
+fn assertContains(col: any, item: any) -> bool { }
+fn assertThrows(fn: any) -> bool { }
+fn mockCreate(target: any) -> any { }
+fn mockReturn(mock: any, method: str, value: any) -> nil { }
+fn mockVerify(mock: any, method: str, times: ant) -> bool { }
+fn snapshotCreate(name: str, value: any) -> nil { }
+fn snapshotMatch(name: str, value: any) -> bool { }
+fn coverageStart() -> nil { }
+fn coverageStop() -> map { }
+fn coverageReport(data: map) -> str { }
+fn benchmarkRun(name: str, fn: any, times: ant) -> map { }

@@ -1,0 +1,15 @@
+// M0RX Standard Library - Push Notifications
+fn fcmInit(serverKey: str) -> any { }
+fn fcmSend(client: any, token: str, title: str, body: str) -> bool { }
+fn fcmSendMulti(client: any, tokens: list, title: str, body: str) -> map { }
+fn fcmTopic(client: any, topic: str, title: str, body: str) -> bool { }
+fn fcmData(client: any, token: str, data: map) -> bool { }
+fn apnsInit(certPath: str, keyPath: str, production: bool) -> any { }
+fn apnsSend(client: any, token: str, title: str, body: str) -> bool { }
+fn apnsData(client: any, token: str, data: map) -> bool { }
+fn apnsBadge(client: any, token: str, count: ant) -> bool { }
+fn webPushInit(vapidPublic: str, vapidPrivate: str) -> any { }
+fn webPushSend(client: any, subscription: map, payload: map) -> bool { }
+fn smsInit(provider: str, apiKey: str) -> any { }
+fn smsSend(client: any, to: str, msg: str) -> bool { }
+fn smsBulk(client: any, numbers: list, msg: str) -> map { }

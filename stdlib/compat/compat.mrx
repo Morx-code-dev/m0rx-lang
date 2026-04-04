@@ -1,0 +1,22 @@
+// M0RX Standard Library - Interop
+// Python
+fn pyInit() -> any { }
+fn pyRun(code: str) -> any { }
+fn pyCall(module: str, fn: str, args: list) -> any { }
+fn pyImport(module: str) -> any { }
+fn pyToM0rx(val: any) -> any { }
+fn m0rxToPy(val: any) -> any { }
+// C / Rust
+fn cLoad(libPath: str) -> any { }
+fn cCall(lib: any, fn: str, args: list) -> any { }
+fn rustLoad(crateFile: str) -> any { }
+fn rustCall(module: any, fn: str, args: list) -> any { }
+// JavaScript
+fn jsInit() -> any { }
+fn jsRun(code: str) -> any { }
+fn jsCall(fn: str, args: list) -> any { }
+fn jsImport(module: str) -> any { }
+fn jsToM0rx(val: any) -> any { }
+fn m0rxToJs(val: any) -> any { }
+// WASM
+fn wasmInterop(module: any, fn: str, args: list) -> any { }

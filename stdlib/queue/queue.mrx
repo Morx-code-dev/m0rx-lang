@@ -1,0 +1,21 @@
+// M0RX Standard Library - Message Queue
+fn rabbitConnect(url: str) -> any { }
+fn rabbitPublish(conn: any, exchange: str, key: str, msg: any) -> bool { }
+fn rabbitConsume(conn: any, queue: str, fn: any) -> nil { }
+fn rabbitAck(msg: any) -> nil { }
+fn rabbitNack(msg: any) -> nil { }
+fn rabbitQueueCreate(conn: any, name: str, opts: map) -> bool { }
+fn rabbitClose(conn: any) -> nil { }
+fn kafkaConnect(brokers: list) -> any { }
+fn kafkaProduce(conn: any, topic: str, msg: any) -> bool { }
+fn kafkaConsume(conn: any, topics: list, fn: any) -> nil { }
+fn kafkaCommit(consumer: any) -> nil { }
+fn kafkaClose(conn: any) -> nil { }
+fn redisQueue(conn: any, name: str) -> any { }
+fn redisPushJob(q: any, job: map) -> bool { }
+fn redisPopJob(q: any) -> map { }
+fn redisJobStatus(q: any, id: str) -> str { }
+fn inMemoryQueue(size: ant) -> any { }
+fn imqPush(q: any, item: any) -> bool { }
+fn imqPop(q: any) -> any { }
+fn imqSize(q: any) -> ant { }

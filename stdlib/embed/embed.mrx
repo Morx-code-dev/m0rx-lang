@@ -1,0 +1,25 @@
+// M0RX Standard Library - Embedded Systems
+fn gpioInit(pin: ant, mode: str) -> any { }
+fn gpioRead(pin: any) -> bool { }
+fn gpioWrite(pin: any, value: bool) -> nil { }
+fn gpioPwm(pin: any, freq: ant, duty: dbl) -> nil { }
+fn gpioInterrupt(pin: any, edge: str, fn: any) -> nil { }
+fn i2cInit(bus: ant, addr: ant) -> any { }
+fn i2cRead(dev: any, reg: ant, size: ant) -> blob { }
+fn i2cWrite(dev: any, reg: ant, data: blob) -> bool { }
+fn spiInit(bus: ant, speed: ant) -> any { }
+fn spiTransfer(dev: any, data: blob) -> blob { }
+fn uartInit(port: str, baud: ant) -> any { }
+fn uartRead(port: any, size: ant) -> blob { }
+fn uartWrite(port: any, data: blob) -> ant { }
+fn sensorTemp(pin: any) -> dbl { }
+fn sensorHumid(pin: any) -> dbl { }
+fn sensorLight(pin: any) -> dbl { }
+fn sensorAccel(pin: any) -> map { }
+fn adcRead(channel: ant) -> dbl { }
+fn dacWrite(channel: ant, value: dbl) -> nil { }
+fn watchdogInit(timeout: ant) -> nil { }
+fn watchdogReset() -> nil { }
+fn deepSleep(ms: ant) -> nil { }
+fn flashRead(addr: ant, size: ant) -> blob { }
+fn flashWrite(addr: ant, data: blob) -> bool { }
