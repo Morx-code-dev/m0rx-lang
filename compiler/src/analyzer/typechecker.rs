@@ -150,6 +150,7 @@ impl TypeChecker {
                 Type::Any
             }
 
+            Expr::Range { .. } => Type::Any,
             Expr::NullSafe { expr, fallback } => {
                 let t = self.check_expr(expr);
                 self.check_expr(fallback);

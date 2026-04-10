@@ -1,513 +1,310 @@
 pub mod ast;
 use ast::*;
 use crate::lexer::token::Token;
-
-pub struct Parser {
-    tokens: Vec<Token>,
-    pos: usize,
-}
-
+pub struct Parser { tokens: Vec<Token>, pos: usize }
 impl Parser {
-    pub fn new(tokens: Vec<Token>) -> Self {
-        Parser { tokens, pos: 0 }
+    pub fn new(tokens: Vec<Token>) -> Self { Parser { tokens, pos: 0 } }
+    fn cur(&self) -> &Token { self.tokens.get(self.pos).unwrap_or(&Token::EOF) }
+    fn adv(&mut self) -> &Token { let t = self.tokens.get(self.pos).unwrap_or(&Token::EOF); self.pos += 1; t }
+    fn skip_nl(&mut self) { while self.cur() == &Token::Newline { self.adv(); } }
+    fn expect(&mut self, t: &Token) -> bool {
+        if self.cur() == t { self.adv(); true }
+        else { eprintln!("M0RX Parse Error: expected {:?}, got {:?}", t, self.cur()); false }
     }
-
-    fn current(&self) -> &Token {
-        self.tokens.get(self.pos).unwrap_or(&Token::EOF)
-    }
-
-    fn advance(&mut self) -> &Token {
-        let tok = self.tokens.get(self.pos).unwrap_or(&Token::EOF);
-        self.pos += 1;
-        tok
-    }
-
-    fn peek(&self) -> &Token {
-        self.tokens.get(self.pos + 1).unwrap_or(&Token::EOF)
-    }
-
-    fn skip_newlines(&mut self) {
-        while self.current() == &Token::Newline {
-            self.advance();
+    fn parse_type(&mut self) -> String {
+        match self.cur().clone() {
+            Token::Tiny=>{self.adv();"tiny".into()} Token::Short=>{self.adv();"short".into()}
+            Token::Ant=>{self.adv();"ant".into()} Token::Long=>{self.adv();"long".into()}
+            Token::Vast=>{self.adv();"vast".into()} Token::Utiny=>{self.adv();"utiny".into()}
+            Token::Ushort=>{self.adv();"ushort".into()} Token::Uant=>{self.adv();"uant".into()}
+            Token::Ulong=>{self.adv();"ulong".into()} Token::Half=>{self.adv();"half".into()}
+            Token::Dbl=>{self.adv();"dbl".into()} Token::Precise=>{self.adv();"precise".into()}
+            Token::Chr=>{self.adv();"chr".into()} Token::Str=>{self.adv();"str".into()}
+            Token::Txt=>{self.adv();"txt".into()} Token::Bool=>{self.adv();"bool".into()}
+            Token::Nil=>{self.adv();"nil".into()} Token::List=>{self.adv();"list".into()}
+            Token::Map=>{self.adv();"map".into()} Token::Set=>{self.adv();"set".into()}
+            Token::Blob=>{self.adv();"blob".into()} Token::Tensor=>{self.adv();"tensor".into()}
+            Token::Void=>{self.adv();"nil".into()}
+            Token::Identifier(s)=>{let v=s.clone();self.adv();v}
+            _ => "any".into()
         }
     }
-
-    fn expect(&mut self, tok: &Token) -> bool {
-        if self.current() == tok {
-            self.advance();
-            true
-        } else {
-            eprintln!(
-                "M0RX Parse Error: expected {:?}, got {:?}",
-                tok, self.current()
-            );
-            false
-        }
-    }
-
-    // FIX: Type tokens को string में convert करो
-    fn parse_type_name(&mut self) -> String {
-        match self.current().clone() {
-            Token::Tiny    => { self.advance(); "tiny".to_string() }
-            Token::Short   => { self.advance(); "short".to_string() }
-            Token::Ant     => { self.advance(); "ant".to_string() }
-            Token::Long    => { self.advance(); "long".to_string() }
-            Token::Vast    => { self.advance(); "vast".to_string() }
-            Token::Utiny   => { self.advance(); "utiny".to_string() }
-            Token::Ushort  => { self.advance(); "ushort".to_string() }
-            Token::Uant    => { self.advance(); "uant".to_string() }
-            Token::Ulong   => { self.advance(); "ulong".to_string() }
-            Token::Half    => { self.advance(); "half".to_string() }
-            Token::Dbl     => { self.advance(); "dbl".to_string() }
-            Token::Precise => { self.advance(); "precise".to_string() }
-            Token::Chr     => { self.advance(); "chr".to_string() }
-            Token::Str     => { self.advance(); "str".to_string() }
-            Token::Txt     => { self.advance(); "txt".to_string() }
-            Token::Bool    => { self.advance(); "bool".to_string() }
-            Token::Nil     => { self.advance(); "nil".to_string() }
-            Token::List    => { self.advance(); "list".to_string() }
-            Token::Map     => { self.advance(); "map".to_string() }
-            Token::Set     => { self.advance(); "set".to_string() }
-            Token::Blob    => { self.advance(); "blob".to_string() }
-            Token::Tensor  => { self.advance(); "tensor".to_string() }
-            Token::Void    => { self.advance(); "nil".to_string() }
-            Token::Identifier(s) => { let v = s.clone(); self.advance(); v }
-            _ => "any".to_string()
-        }
-    }
-
     fn parse_primary(&mut self) -> Expr {
-        match self.current().clone() {
-            Token::IntLiteral(n) => {
-                let v = n; self.advance(); Expr::IntLit(v)
-            }
-            Token::FloatLiteral(f) => {
-                let v = f; self.advance(); Expr::FloatLit(v)
-            }
-            Token::StringLiteral(s) => {
-                let v = s.clone(); self.advance(); Expr::StrLit(v)
-            }
-            Token::True  => { self.advance(); Expr::BoolLit(true)  }
-            Token::False => { self.advance(); Expr::BoolLit(false) }
-            Token::Null  => { self.advance(); Expr::NilLit }
-            Token::Nil   => { self.advance(); Expr::NilLit }
-
+        match self.cur().clone() {
+            Token::IntLiteral(n) => { let v=n; self.adv(); Expr::IntLit(v) }
+            Token::FloatLiteral(f) => { let v=f; self.adv(); Expr::FloatLit(v) }
+            Token::StringLiteral(s) => { let v=s.clone(); self.adv(); Expr::StrLit(v) }
+            Token::True => { self.adv(); Expr::BoolLit(true) }
+            Token::False => { self.adv(); Expr::BoolLit(false) }
+            Token::Null | Token::Nil => { self.adv(); Expr::NilLit }
             Token::Identifier(name) => {
-                let n = name.clone();
-                self.advance();
-                if self.current() == &Token::LParen {
-                    self.advance();
+                let n = name.clone(); self.adv();
+                if self.cur() == &Token::LParen {
+                    self.adv();
                     let mut args = Vec::new();
-                    while self.current() != &Token::RParen
-                        && self.current() != &Token::EOF
-                    {
-                        self.skip_newlines();
-                        if self.current() == &Token::RParen { break; }
+                    while self.cur() != &Token::RParen && self.cur() != &Token::EOF {
+                        self.skip_nl();
+                        if self.cur() == &Token::RParen { break; }
                         args.push(self.parse_expr());
-                        if self.current() == &Token::Comma {
-                            self.advance();
-                        }
+                        if self.cur() == &Token::Comma { self.adv(); }
                     }
                     self.expect(&Token::RParen);
                     Expr::Call { name: n, args }
-                } else if self.current() == &Token::Dot {
-                    self.advance();
-                    if let Token::Identifier(field) = self.current().clone() {
-                        let f = field.clone();
-                        self.advance();
-                        Expr::Field {
-                            obj: Box::new(Expr::Ident(n)),
-                            field: f,
-                        }
-                    } else {
-                        Expr::Ident(n)
-                    }
-                } else if self.current() == &Token::LBracket {
-                    self.advance();
+                } else if self.cur() == &Token::Dot {
+                    self.adv();
+                    if let Token::Identifier(f) = self.cur().clone() {
+                        let field = f.clone(); self.adv();
+                        Expr::Field { obj: Box::new(Expr::Ident(n)), field }
+                    } else { Expr::Ident(n) }
+                } else if self.cur() == &Token::LBracket {
+                    self.adv();
                     let idx = self.parse_expr();
                     self.expect(&Token::RBracket);
-                    Expr::Index {
-                        obj: Box::new(Expr::Ident(n)),
-                        idx: Box::new(idx),
-                    }
-                } else {
-                    Expr::Ident(n)
-                }
+                    Expr::Index { obj: Box::new(Expr::Ident(n)), idx: Box::new(idx) }
+                } else { Expr::Ident(n) }
             }
-
-            Token::LParen => {
-                self.advance();
-                let expr = self.parse_expr();
-                self.expect(&Token::RParen);
-                expr
-            }
-
+            Token::LParen => { self.adv(); let e=self.parse_expr(); self.expect(&Token::RParen); e }
             Token::LBracket => {
-                self.advance();
+                self.adv();
                 let mut items = Vec::new();
-                while self.current() != &Token::RBracket
-                    && self.current() != &Token::EOF
-                {
+                while self.cur() != &Token::RBracket && self.cur() != &Token::EOF {
                     items.push(self.parse_expr());
-                    if self.current() == &Token::Comma {
-                        self.advance();
-                    }
+                    if self.cur() == &Token::Comma { self.adv(); }
                 }
-                self.expect(&Token::RBracket);
-                Expr::ListLit(items)
+                self.expect(&Token::RBracket); Expr::ListLit(items)
             }
-
             Token::LBrace => {
-                self.advance();
+                self.adv();
                 let mut pairs = Vec::new();
-                while self.current() != &Token::RBrace
-                    && self.current() != &Token::EOF
-                {
-                    self.skip_newlines();
-                    if self.current() == &Token::RBrace { break; }
-                    let key = self.parse_expr();
+                while self.cur() != &Token::RBrace && self.cur() != &Token::EOF {
+                    self.skip_nl();
+                    if self.cur() == &Token::RBrace { break; }
+                    let k = self.parse_expr();
                     self.expect(&Token::Colon);
-                    let val = self.parse_expr();
-                    pairs.push((key, val));
-                    if self.current() == &Token::Comma {
-                        self.advance();
-                    }
+                    let v = self.parse_expr();
+                    pairs.push((k, v));
+                    if self.cur() == &Token::Comma { self.adv(); }
                 }
-                self.expect(&Token::RBrace);
-                Expr::MapLit(pairs)
+                self.expect(&Token::RBrace); Expr::MapLit(pairs)
             }
-
-            Token::Minus => {
-                self.advance();
-                let expr = self.parse_primary();
-                Expr::UnaryOp {
-                    op: UnaryOpKind::Neg,
-                    expr: Box::new(expr),
-                }
-            }
-
-            _ => {
-                self.advance();
-                Expr::NilLit
-            }
+            Token::Minus => { self.adv(); let e=self.parse_primary(); Expr::UnaryOp { op: UnaryOpKind::Neg, expr: Box::new(e) } }
+            _ => { self.adv(); Expr::NilLit }
         }
     }
-
-    fn parse_expr(&mut self) -> Expr {
-        self.parse_or()
+    fn parse_expr(&mut self) -> Expr { self.parse_range() }
+    fn parse_range(&mut self) -> Expr {
+        let left = self.parse_or();
+        if self.cur() == &Token::DotDot {
+            self.adv();
+            let inclusive = if self.cur() == &Token::Dot { self.adv(); true } else { false };
+            let right = self.parse_or();
+            Expr::Range { start: Box::new(left), end: Box::new(right), inclusive }
+        } else if self.cur() == &Token::DotDotDot {
+            self.adv();
+            let right = self.parse_or();
+            Expr::Range { start: Box::new(left), end: Box::new(right), inclusive: true }
+        } else { left }
     }
-
     fn parse_or(&mut self) -> Expr {
-        let mut left = self.parse_and();
-        while self.current() == &Token::PipePipe {
-            self.advance();
-            let right = self.parse_and();
-            left = Expr::BinOp { left: Box::new(left), op: BinOpKind::Or, right: Box::new(right) };
+        let mut l = self.parse_and();
+        while self.cur() == &Token::PipePipe {
+            self.adv(); let r=self.parse_and();
+            l = Expr::BinOp { left: Box::new(l), op: BinOpKind::Or, right: Box::new(r) };
         }
-        left
+        l
     }
-
     fn parse_and(&mut self) -> Expr {
-        let mut left = self.parse_comparison();
-        while self.current() == &Token::AmpAmp {
-            self.advance();
-            let right = self.parse_comparison();
-            left = Expr::BinOp { left: Box::new(left), op: BinOpKind::And, right: Box::new(right) };
+        let mut l = self.parse_cmp();
+        while self.cur() == &Token::AmpAmp {
+            self.adv(); let r=self.parse_cmp();
+            l = Expr::BinOp { left: Box::new(l), op: BinOpKind::And, right: Box::new(r) };
         }
-        left
+        l
     }
-
-    fn parse_comparison(&mut self) -> Expr {
-        let mut left = self.parse_addition();
+    fn parse_cmp(&mut self) -> Expr {
+        let mut l = self.parse_add();
         loop {
-            let op = match self.current() {
-                Token::EqEq    => BinOpKind::Eq,
-                Token::BangEq  => BinOpKind::NotEq,
-                Token::Greater => BinOpKind::Gt,
-                Token::Less    => BinOpKind::Lt,
-                Token::GreaterEq => BinOpKind::GtEq,
-                Token::LessEq    => BinOpKind::LtEq,
+            let op = match self.cur() {
+                Token::EqEq=>BinOpKind::Eq, Token::BangEq=>BinOpKind::NotEq,
+                Token::Greater=>BinOpKind::Gt, Token::Less=>BinOpKind::Lt,
+                Token::GreaterEq=>BinOpKind::GtEq, Token::LessEq=>BinOpKind::LtEq,
                 _ => break,
             };
-            self.advance();
-            let right = self.parse_addition();
-            left = Expr::BinOp { left: Box::new(left), op, right: Box::new(right) };
+            self.adv(); let r=self.parse_add();
+            l = Expr::BinOp { left: Box::new(l), op, right: Box::new(r) };
         }
-        left
+        l
     }
-
-    fn parse_addition(&mut self) -> Expr {
-        let mut left = self.parse_multiplication();
+    fn parse_add(&mut self) -> Expr {
+        let mut l = self.parse_mul();
         loop {
-            let op = match self.current() {
-                Token::Plus  => BinOpKind::Add,
-                Token::Minus => BinOpKind::Sub,
-                _ => break,
+            let op = match self.cur() {
+                Token::Plus=>BinOpKind::Add, Token::Minus=>BinOpKind::Sub, _ => break,
             };
-            self.advance();
-            let right = self.parse_multiplication();
-            left = Expr::BinOp { left: Box::new(left), op, right: Box::new(right) };
+            self.adv(); let r=self.parse_mul();
+            l = Expr::BinOp { left: Box::new(l), op, right: Box::new(r) };
         }
-        left
+        l
     }
-
-    fn parse_multiplication(&mut self) -> Expr {
-        let mut left = self.parse_primary();
+    fn parse_mul(&mut self) -> Expr {
+        let mut l = self.parse_primary();
         loop {
-            let op = match self.current() {
-                Token::Star     => BinOpKind::Mul,
-                Token::Slash    => BinOpKind::Div,
-                Token::Percent  => BinOpKind::Mod,
-                Token::StarStar => BinOpKind::Pow,
-                _ => break,
+            let op = match self.cur() {
+                Token::Star=>BinOpKind::Mul, Token::Slash=>BinOpKind::Div,
+                Token::Percent=>BinOpKind::Mod, Token::StarStar=>BinOpKind::Pow, _ => break,
             };
-            self.advance();
-            let right = self.parse_primary();
-            left = Expr::BinOp { left: Box::new(left), op, right: Box::new(right) };
+            self.adv(); let r=self.parse_primary();
+            l = Expr::BinOp { left: Box::new(l), op, right: Box::new(r) };
         }
-        left
+        l
     }
-
     fn parse_stmt(&mut self) -> Option<Stmt> {
-        self.skip_newlines();
-        match self.current().clone() {
+        self.skip_nl();
+        match self.cur().clone() {
             Token::Let | Token::Fix | Token::Bind => {
-                self.advance();
-                let name = if let Token::Identifier(n) = self.current().clone() {
-                    self.advance(); n
-                } else { return None; };
-                let type_ann = if self.current() == &Token::Colon {
-                    self.advance();
-                    Some(self.parse_type_name())
-                } else { None };
-                let value = if self.current() == &Token::Eq {
-                    self.advance();
-                    Some(self.parse_expr())
-                } else { None };
+                self.adv();
+                let name = if let Token::Identifier(n) = self.cur().clone() { self.adv(); n } else { return None; };
+                let type_ann = if self.cur() == &Token::Colon { self.adv(); Some(self.parse_type()) } else { None };
+                let value = if self.cur() == &Token::Eq { self.adv(); Some(self.parse_expr()) } else { None };
                 Some(Stmt::Let { name, type_ann, value, mutable: true })
             }
-
             Token::If => {
-                self.advance();
+                self.adv();
                 let cond = self.parse_expr();
                 let body = self.parse_block();
                 let mut elif_branches = Vec::new();
                 let mut else_body = None;
                 loop {
-                    self.skip_newlines();
-                    if self.current() == &Token::Elif {
-                        self.advance();
-                        let ec = self.parse_expr();
-                        let eb = self.parse_block();
-                        elif_branches.push((ec, eb));
-                    } else if self.current() == &Token::Else {
-                        self.advance();
-                        else_body = Some(self.parse_block());
-                        break;
-                    } else { break; }
+                    self.skip_nl();
+                    if self.cur() == &Token::Elif { self.adv(); let ec=self.parse_expr(); let eb=self.parse_block(); elif_branches.push((ec,eb)); }
+                    else if self.cur() == &Token::Else { self.adv(); else_body=Some(self.parse_block()); break; }
+                    else { break; }
                 }
                 Some(Stmt::If { cond, body, elif_branches, else_body })
             }
-
-            Token::While => {
-                self.advance();
-                let cond = self.parse_expr();
-                let body = self.parse_block();
-                Some(Stmt::While { cond, body })
-            }
-
-            Token::Loop => {
-                self.advance();
-                let body = self.parse_block();
-                Some(Stmt::Loop { body })
-            }
-
-            Token::Each => {
-                self.advance();
-                let var = if let Token::Identifier(n) = self.current().clone() {
-                    self.advance(); n
-                } else { "_".to_string() };
-                if let Token::Identifier(kw) = self.current().clone() {
-                    if kw == "in" { self.advance(); }
-                }
+            Token::While => { self.adv(); let c=self.parse_expr(); let b=self.parse_block(); Some(Stmt::While { cond:c, body:b }) }
+            Token::Loop  => { self.adv(); let b=self.parse_block(); Some(Stmt::Loop { body:b }) }
+            Token::Each  => {
+                self.adv();
+                let var = if let Token::Identifier(n) = self.cur().clone() { self.adv(); n } else { "_".into() };
+                if let Token::Identifier(k) = self.cur().clone() { if k=="in" { self.adv(); } }
                 let iter = self.parse_expr();
                 let body = self.parse_block();
                 Some(Stmt::Each { var, iter, body })
             }
-
             Token::Fn => {
-                self.advance();
-                let is_async = false;
-                let name = if let Token::Identifier(n) = self.current().clone() {
-                    self.advance(); n
-                } else { return None; };
+                self.adv();
+                let name = if let Token::Identifier(n) = self.cur().clone() { self.adv(); n } else { return None; };
                 self.expect(&Token::LParen);
                 let mut params = Vec::new();
-                while self.current() != &Token::RParen
-                    && self.current() != &Token::EOF
-                {
-                    let pname = if let Token::Identifier(n) = self.current().clone() {
-                        self.advance(); n
-                    } else { break; };
-                    let ptype = if self.current() == &Token::Colon {
-                        self.advance();
-                        self.parse_type_name()
-                    } else { "any".to_string() };
-                    params.push((pname, ptype));
-                    if self.current() == &Token::Comma { self.advance(); }
+                while self.cur() != &Token::RParen && self.cur() != &Token::EOF {
+                    let pn = if let Token::Identifier(n) = self.cur().clone() { self.adv(); n } else { break; };
+                    let pt = if self.cur() == &Token::Colon { self.adv(); self.parse_type() } else { "any".into() };
+                    params.push((pn, pt));
+                    if self.cur() == &Token::Comma { self.adv(); }
                 }
                 self.expect(&Token::RParen);
-                let return_type = if self.current() == &Token::Arrow {
-                    self.advance();
-                    Some(self.parse_type_name())
-                } else { None };
+                let return_type = if self.cur() == &Token::Arrow { self.adv(); Some(self.parse_type()) } else { None };
                 let body = self.parse_block();
-                Some(Stmt::Fn { name, params, return_type, body, is_async })
+                Some(Stmt::Fn { name, params, return_type, body, is_async: false })
             }
-
             Token::Async => {
-                self.advance();
-                if self.current() == &Token::Fn {
-                    self.advance();
-                    let name = if let Token::Identifier(n) = self.current().clone() {
-                        self.advance(); n
-                    } else { return None; };
+                self.adv();
+                if self.cur() == &Token::Fn {
+                    self.adv();
+                    let name = if let Token::Identifier(n) = self.cur().clone() { self.adv(); n } else { return None; };
                     self.expect(&Token::LParen);
                     let mut params = Vec::new();
-                    while self.current() != &Token::RParen
-                        && self.current() != &Token::EOF
-                    {
-                        let pname = if let Token::Identifier(n) = self.current().clone() {
-                            self.advance(); n
-                        } else { break; };
-                        let ptype = if self.current() == &Token::Colon {
-                            self.advance();
-                            self.parse_type_name()
-                        } else { "any".to_string() };
-                        params.push((pname, ptype));
-                        if self.current() == &Token::Comma { self.advance(); }
+                    while self.cur() != &Token::RParen && self.cur() != &Token::EOF {
+                        let pn = if let Token::Identifier(n) = self.cur().clone() { self.adv(); n } else { break; };
+                        let pt = if self.cur() == &Token::Colon { self.adv(); self.parse_type() } else { "any".into() };
+                        params.push((pn, pt));
+                        if self.cur() == &Token::Comma { self.adv(); }
                     }
                     self.expect(&Token::RParen);
-                    let return_type = if self.current() == &Token::Arrow {
-                        self.advance();
-                        Some(self.parse_type_name())
-                    } else { None };
+                    let return_type = if self.cur() == &Token::Arrow { self.adv(); Some(self.parse_type()) } else { None };
                     let body = self.parse_block();
                     Some(Stmt::Fn { name, params, return_type, body, is_async: true })
                 } else { None }
             }
-
             Token::Class => {
-                self.advance();
-                let name = if let Token::Identifier(n) = self.current().clone() {
-                    self.advance(); n
-                } else { return None; };
+                self.adv();
+                let name = if let Token::Identifier(n) = self.cur().clone() { self.adv(); n } else { return None; };
                 let body = self.parse_block();
                 Some(Stmt::Class { name, body })
             }
-
             Token::Try => {
-                self.advance();
-                let body = self.parse_block();
-                self.skip_newlines();
-                let (catch_var, catch_body) = if self.current() == &Token::Catch {
-                    self.advance();
-                    let cv = if let Token::Identifier(n) = self.current().clone() {
-                        self.advance(); n
-                    } else { "err".to_string() };
-                    let cb = self.parse_block();
-                    (cv, cb)
-                } else {
-                    ("err".to_string(), Vec::new())
-                };
-                Some(Stmt::TryCatch { body, catch_var, catch_body })
+                self.adv(); let body=self.parse_block(); self.skip_nl();
+                let (cv, cb) = if self.cur() == &Token::Catch {
+                    self.adv();
+                    let v = if let Token::Identifier(n) = self.cur().clone() { self.adv(); n } else { "err".into() };
+                    (v, self.parse_block())
+                } else { ("err".into(), Vec::new()) };
+                Some(Stmt::TryCatch { body, catch_var: cv, catch_body: cb })
             }
-
             Token::Match => {
-                self.advance();
-                let expr = self.parse_expr();
-                self.skip_newlines();
-                self.expect(&Token::LBrace);
+                self.adv(); let expr=self.parse_expr(); self.skip_nl(); self.expect(&Token::LBrace);
                 let mut arms = Vec::new();
                 loop {
-                    self.skip_newlines();
-                    if self.current() == &Token::RBrace
-                        || self.current() == &Token::EOF
-                    { break; }
-                    let pat = self.parse_expr();
-                    self.skip_newlines();
-                    if self.current() == &Token::FatArrow { self.advance(); }
-                    let arm_body = self.parse_block();
-                    arms.push((pat, arm_body));
+                    self.skip_nl();
+                    if self.cur() == &Token::RBrace || self.cur() == &Token::EOF { break; }
+                    let pat = self.parse_expr(); self.skip_nl();
+                    if self.cur() == &Token::FatArrow { self.adv(); }
+                    let ab = self.parse_block();
+                    arms.push((pat, ab));
                 }
                 self.expect(&Token::RBrace);
                 Some(Stmt::Match { expr, arms })
             }
-
             Token::Give => {
-                self.advance();
-                if self.current() == &Token::Newline
-                    || self.current() == &Token::EOF
-                {
-                    Some(Stmt::Give(None))
-                } else {
-                    Some(Stmt::Give(Some(self.parse_expr())))
-                }
+                self.adv();
+                if self.cur() == &Token::Newline || self.cur() == &Token::EOF { Some(Stmt::Give(None)) }
+                else { Some(Stmt::Give(Some(self.parse_expr()))) }
             }
-
-            Token::Break => { self.advance(); Some(Stmt::Break) }
-            Token::Skip  => { self.advance(); Some(Stmt::Skip)  }
-
             Token::Use => {
-                self.advance();
+                self.adv();
                 let mut path = Vec::new();
-                if let Token::Identifier(n) = self.current().clone() {
-                    self.advance(); path.push(n);
-                }
-                while self.current() == &Token::Dot {
-                    self.advance();
-                    if let Token::Identifier(n) = self.current().clone() {
-                        self.advance(); path.push(n);
-                    }
+                if let Token::Identifier(n) = self.cur().clone() { self.adv(); path.push(n); }
+                while self.cur() == &Token::Dot {
+                    self.adv();
+                    if let Token::Identifier(n) = self.cur().clone() { self.adv(); path.push(n); }
                 }
                 Some(Stmt::Use { path, alias: None })
             }
-
-            Token::EOF => None,
-            Token::Newline => { self.advance(); None }
-
+            Token::Break => { self.adv(); Some(Stmt::Break) }
+            Token::Skip  => { self.adv(); Some(Stmt::Skip)  }
+            Token::EOF | Token::Newline => { self.adv(); None }
             _ => {
                 let expr = self.parse_expr();
+                // Check if assignment: ident = value
+                if let Expr::Ident(ref name) = expr {
+                    if self.cur() == &Token::Eq {
+                        let n = name.clone();
+                        self.adv();
+                        let value = self.parse_expr();
+                        return Some(Stmt::Assign { name: n, value });
+                    }
+                }
                 Some(Stmt::ExprStmt(expr))
             }
         }
     }
-
     fn parse_block(&mut self) -> Vec<Stmt> {
-        self.skip_newlines();
-        self.expect(&Token::LBrace);
+        self.skip_nl(); self.expect(&Token::LBrace);
         let mut stmts = Vec::new();
         loop {
-            self.skip_newlines();
-            if self.current() == &Token::RBrace
-                || self.current() == &Token::EOF
-            { break; }
-            if let Some(s) = self.parse_stmt() {
-                stmts.push(s);
-            }
+            self.skip_nl();
+            if self.cur() == &Token::RBrace || self.cur() == &Token::EOF { break; }
+            if let Some(s) = self.parse_stmt() { stmts.push(s); }
         }
-        self.expect(&Token::RBrace);
-        stmts
+        self.expect(&Token::RBrace); stmts
     }
-
     pub fn parse(&mut self) -> Program {
         let mut stmts = Vec::new();
         loop {
-            self.skip_newlines();
-            if self.current() == &Token::EOF { break; }
-            if let Some(s) = self.parse_stmt() {
-                stmts.push(s);
-            }
+            self.skip_nl();
+            if self.cur() == &Token::EOF { break; }
+            if let Some(s) = self.parse_stmt() { stmts.push(s); }
         }
         Program { stmts }
     }

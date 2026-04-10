@@ -1,237 +1,216 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
-
-mod lexer;
-mod parser;
-mod analyzer;
-mod codegen;
-
+mod lexer; mod parser; mod analyzer; mod codegen;
 use lexer::Lexer;
 use parser::Parser;
 use analyzer::typechecker::TypeChecker;
 use analyzer::semantic::SemanticAnalyzer;
-use codegen::CodeGen;
 
 fn run_file(path: &str) {
     let code = match std::fs::read_to_string(path) {
         Ok(c) => c,
-        Err(e) => {
-            eprintln!("M0RX Error: Cannot read file '{}': {}", path, e);
-            std::process::exit(1);
-        }
+        Err(e) => { eprintln!("M0RX Error: Cannot read '{}': {}", path, e); std::process::exit(1); }
     };
-    compile_and_run(&code, path);
+    run_code(&code);
 }
 
-fn compile_and_run(code: &str, source: &str) {
+fn run_code(code: &str) {
     let mut lex = Lexer::new(code);
     let tokens = lex.tokenize();
-
-    let mut parser = Parser::new(tokens);
-    let program = parser.parse();
-
-    let mut semantic = SemanticAnalyzer::new();
-    semantic.analyze(&program);
-    if !semantic.errors.is_empty() {
-        for e in &semantic.errors {
-            eprintln!("{}", e);
-        }
-        std::process::exit(1);
-    }
-
-    let mut checker = TypeChecker::new();
-    let type_errors = checker.check(&program);
-    if !type_errors.is_empty() {
-        for e in &type_errors {
-            eprintln!("{}", e);
-        }
-        std::process::exit(1);
-    }
-
-    let mut codegen = CodeGen::new();
-    let output = codegen.generate(&program);
-
-    // Execute: showln/show calls output करो
+    let mut p = Parser::new(tokens);
+    let program = p.parse();
+    let mut sem = SemanticAnalyzer::new();
+    sem.analyze(&program);
+    if !sem.errors.is_empty() { for e in &sem.errors { eprintln!("{}", e); } std::process::exit(1); }
+    let mut chk = TypeChecker::new();
+    let errs = chk.check(&program);
+    if !errs.is_empty() { for e in &errs { eprintln!("{}", e); } std::process::exit(1); }
     execute(&program);
 }
 
-fn execute(program: &crate::parser::ast::Program) {
-    use crate::parser::ast::{Stmt, Expr};
+fn execute(program: &parser::ast::Program) {
+    use parser::ast::{Stmt, Expr, BinOpKind, UnaryOpKind};
+    use std::collections::HashMap;
 
-    let mut vars: std::collections::HashMap<String, String> = std::collections::HashMap::new();
+    #[derive(Clone, Debug)]
+    enum Val { Int(i64), Float(f64), Str(String), Bool(bool), List(Vec<Val>), Nil }
 
-    fn eval_expr(expr: &Expr, vars: &std::collections::HashMap<String, String>) -> String {
+    impl Val {
+        fn display(&self) -> String {
+            match self {
+                Val::Int(n) => n.to_string(),
+                Val::Float(f) => if f.fract()==0.0 { (*f as i64).to_string() } else { f.to_string() },
+                Val::Str(s) => s.clone(),
+                Val::Bool(b) => b.to_string(),
+                Val::Nil => "nil".to_string(),
+                Val::List(l) => { let p:Vec<String>=l.iter().map(|v|v.display()).collect(); format!("[{}]",p.join(", ")) }
+            }
+        }
+        fn to_f64(&self) -> f64 { match self { Val::Int(n)=>*n as f64, Val::Float(f)=>*f, Val::Str(s)=>s.parse().unwrap_or(0.0), Val::Bool(b)=>if *b {1.0} else {0.0}, _=>0.0 } }
+        fn to_i64(&self) -> i64 { match self { Val::Int(n)=>*n, Val::Float(f)=>*f as i64, Val::Str(s)=>s.parse().unwrap_or(0), Val::Bool(b)=>if *b {1} else {0}, _=>0 } }
+        fn truthy(&self) -> bool { match self { Val::Bool(b)=>*b, Val::Int(n)=>*n!=0, Val::Float(f)=>*f!=0.0, Val::Str(s)=>!s.is_empty(), Val::Nil=>false, Val::List(l)=>!l.is_empty() } }
+    }
+
+    struct Env { scopes: Vec<HashMap<String, Val>> }
+    impl Env {
+        fn new() -> Self { Env { scopes: vec![HashMap::new()] } }
+        fn get(&self, name: &str) -> Val {
+            for s in self.scopes.iter().rev() { if let Some(v) = s.get(name) { return v.clone(); } }
+            Val::Nil
+        }
+        fn set(&mut self, name: &str, val: Val) {
+            for s in self.scopes.iter_mut().rev() {
+                if s.contains_key(name) { s.insert(name.to_string(), val); return; }
+            }
+            self.scopes.last_mut().unwrap().insert(name.to_string(), val);
+        }
+        fn def(&mut self, name: &str, val: Val) {
+            self.scopes.last_mut().unwrap().insert(name.to_string(), val);
+        }
+        fn push(&mut self) { self.scopes.push(HashMap::new()); }
+        fn pop(&mut self) { self.scopes.pop(); }
+    }
+
+    fn eval(expr: &Expr, env: &mut Env) -> Val {
         match expr {
-            Expr::IntLit(n)   => n.to_string(),
-            Expr::FloatLit(f) => f.to_string(),
-            Expr::StrLit(s)   => s.clone(),
-            Expr::BoolLit(b)  => b.to_string(),
-            Expr::NilLit      => "nil".to_string(),
-            Expr::Ident(name) => vars.get(name).cloned().unwrap_or_else(|| name.clone()),
+            Expr::IntLit(n)   => Val::Int(*n),
+            Expr::FloatLit(f) => Val::Float(*f),
+            Expr::StrLit(s)   => Val::Str(s.clone()),
+            Expr::BoolLit(b)  => Val::Bool(*b),
+            Expr::NilLit      => Val::Nil,
+            Expr::Ident(name) => env.get(name),
+            Expr::Range { start, end, inclusive } => {
+                let s = eval(start, env).to_i64();
+                let e = eval(end, env).to_i64();
+                let items: Vec<Val> = if *inclusive { (s..=e).map(Val::Int).collect() }
+                                      else { (s..e).map(Val::Int).collect() };
+                Val::List(items)
+            }
             Expr::BinOp { left, op, right } => {
-                let l = eval_expr(left, vars);
-                let r = eval_expr(right, vars);
-                let lf: f64 = l.parse().unwrap_or(0.0);
-                let rf: f64 = r.parse().unwrap_or(0.0);
-                use crate::parser::ast::BinOpKind::*;
+                let l = eval(left, env);
+                let r = eval(right, env);
                 match op {
-                    Add => {
-                        if let (Ok(li), Ok(ri)) = (l.parse::<i64>(), r.parse::<i64>()) {
-                            (li + ri).to_string()
-                        } else { (lf + rf).to_string() }
-                    }
-                    Sub => (lf - rf).to_string(),
-                    Mul => (lf * rf).to_string(),
-                    Div => if rf != 0.0 { (lf / rf).to_string() } else { "0".to_string() },
-                    Mod => ((lf as i64 % rf as i64)).to_string(),
-                    Pow => lf.powf(rf).to_string(),
-                    Eq    => (lf == rf || l == r).to_string(),
-                    NotEq => (lf != rf).to_string(),
-                    Gt    => (lf > rf).to_string(),
-                    Lt    => (lf < rf).to_string(),
-                    GtEq  => (lf >= rf).to_string(),
-                    LtEq  => (lf <= rf).to_string(),
-                    And   => ((l == "true") && (r == "true")).to_string(),
-                    Or    => ((l == "true") || (r == "true")).to_string(),
-                    _ => format!("({} op {})", l, r),
+                    BinOpKind::Add => match (&l,&r) {
+                        (Val::Int(a),Val::Int(b)) => Val::Int(a+b),
+                        (Val::Str(a),Val::Str(b)) => Val::Str(format!("{}{}",a,b)),
+                        _ => Val::Float(l.to_f64()+r.to_f64()),
+                    },
+                    BinOpKind::Sub => match (&l,&r) { (Val::Int(a),Val::Int(b))=>Val::Int(a-b), _=>Val::Float(l.to_f64()-r.to_f64()) },
+                    BinOpKind::Mul => match (&l,&r) { (Val::Int(a),Val::Int(b))=>Val::Int(a*b), _=>Val::Float(l.to_f64()*r.to_f64()) },
+                    BinOpKind::Div => { let rf=r.to_f64(); if rf==0.0 {Val::Nil} else { let lf=l.to_f64(); if lf%rf==0.0 {Val::Int((lf/rf) as i64)} else {Val::Float(lf/rf)} } },
+                    BinOpKind::Mod => Val::Int(l.to_i64() % r.to_i64()),
+                    BinOpKind::Pow => Val::Float(l.to_f64().powf(r.to_f64())),
+                    BinOpKind::Eq  => Val::Bool(l.display()==r.display() || (l.to_f64()==r.to_f64())),
+                    BinOpKind::NotEq => Val::Bool(l.display()!=r.display()),
+                    BinOpKind::Gt  => Val::Bool(l.to_f64()>r.to_f64()),
+                    BinOpKind::Lt  => Val::Bool(l.to_f64()<r.to_f64()),
+                    BinOpKind::GtEq => Val::Bool(l.to_f64()>=r.to_f64()),
+                    BinOpKind::LtEq => Val::Bool(l.to_f64()<=r.to_f64()),
+                    BinOpKind::And => Val::Bool(l.truthy() && r.truthy()),
+                    BinOpKind::Or  => Val::Bool(l.truthy() || r.truthy()),
+                    _ => Val::Nil,
                 }
+            }
+            Expr::UnaryOp { op, expr } => {
+                let v = eval(expr, env);
+                match op { UnaryOpKind::Neg => match v { Val::Int(n)=>Val::Int(-n), Val::Float(f)=>Val::Float(-f), _=>Val::Nil }, _=>v }
             }
             Expr::Call { name, args } => {
-                let eargs: Vec<String> = args.iter().map(|a| eval_expr(a, vars)).collect();
+                let eargs: Vec<Val> = args.iter().map(|a| eval(a, env)).collect();
                 match name.as_str() {
-                    "showln" => {
-                        println!("{}", eargs.join(" "));
-                        String::new()
-                    }
-                    "show" => {
-                        print!("{}", eargs.join(" "));
-                        String::new()
-                    }
-                    "length" => eargs.first().map(|s| s.len().to_string()).unwrap_or("0".to_string()),
-                    "upper"  => eargs.first().map(|s| s.to_uppercase()).unwrap_or_default(),
-                    "lower"  => eargs.first().map(|s| s.to_lowercase()).unwrap_or_default(),
-                    "trim"   => eargs.first().map(|s| s.trim().to_string()).unwrap_or_default(),
-                    "absolute" => {
-                        let n: f64 = eargs.first().and_then(|s| s.parse().ok()).unwrap_or(0.0);
-                        n.abs().to_string()
-                    }
-                    "root" => {
-                        let n: f64 = eargs.first().and_then(|s| s.parse().ok()).unwrap_or(0.0);
-                        n.sqrt().to_string()
-                    }
-                    "power" => {
-                        let base: f64 = eargs.first().and_then(|s| s.parse().ok()).unwrap_or(0.0);
-                        let exp: f64 = eargs.get(1).and_then(|s| s.parse().ok()).unwrap_or(0.0);
-                        base.powf(exp).to_string()
-                    }
-                    "ceil"  => { let n: f64 = eargs.first().and_then(|s| s.parse().ok()).unwrap_or(0.0); n.ceil().to_string() }
-                    "floor" => { let n: f64 = eargs.first().and_then(|s| s.parse().ok()).unwrap_or(0.0); n.floor().to_string() }
-                    "round" => { let n: f64 = eargs.first().and_then(|s| s.parse().ok()).unwrap_or(0.0); n.round().to_string() }
-                    "glue"  => eargs.join(""),
-                    _ => String::new(),
+                    "showln" => { let s:Vec<String>=eargs.iter().map(|v|v.display()).collect(); println!("{}",s.join(" ")); Val::Nil }
+                    "show"   => { let s:Vec<String>=eargs.iter().map(|v|v.display()).collect(); print!("{}",s.join(" ")); Val::Nil }
+                    "length" => match eargs.first() { Some(Val::Str(s))=>Val::Int(s.len() as i64), Some(Val::List(l))=>Val::Int(l.len() as i64), _=>Val::Int(0) },
+                    "upper"  => if let Some(Val::Str(s))=eargs.first() { Val::Str(s.to_uppercase()) } else { Val::Nil },
+                    "lower"  => if let Some(Val::Str(s))=eargs.first() { Val::Str(s.to_lowercase()) } else { Val::Nil },
+                    "trim"   => if let Some(Val::Str(s))=eargs.first() { Val::Str(s.trim().to_string()) } else { Val::Nil },
+                    "absolute" => Val::Float(eargs.first().map(|v|v.to_f64().abs()).unwrap_or(0.0)),
+                    "root"   => Val::Float(eargs.first().map(|v|v.to_f64().sqrt()).unwrap_or(0.0)),
+                    "power"  => { let b=eargs.first().map(|v|v.to_f64()).unwrap_or(0.0); let e=eargs.get(1).map(|v|v.to_f64()).unwrap_or(0.0); Val::Float(b.powf(e)) },
+                    "ceil"   => Val::Int(eargs.first().map(|v|v.to_f64().ceil() as i64).unwrap_or(0)),
+                    "floor"  => Val::Int(eargs.first().map(|v|v.to_f64().floor() as i64).unwrap_or(0)),
+                    "round"  => Val::Int(eargs.first().map(|v|v.to_f64().round() as i64).unwrap_or(0)),
+                    "glue"   => { let p:Vec<String>=eargs.iter().map(|v|v.display()).collect(); Val::Str(p.join("")) },
+                    "asStr"  => Val::Str(eargs.first().map(|v|v.display()).unwrap_or_default()),
+                    "asInt"  => Val::Int(eargs.first().map(|v|v.to_i64()).unwrap_or(0)),
+                    "asFloat"=> Val::Float(eargs.first().map(|v|v.to_f64()).unwrap_or(0.0)),
+                    "has"    => if let (Some(Val::Str(s)),Some(Val::Str(p)))=(eargs.first(),eargs.get(1)) { Val::Bool(s.contains(p.as_str())) } else { Val::Bool(false) },
+                    "quit"   => std::process::exit(0),
+                    _ => Val::Nil,
                 }
             }
-            Expr::ListLit(items) => {
-                let vals: Vec<String> = items.iter().map(|i| eval_expr(i, vars)).collect();
-                format!("[{}]", vals.join(", "))
-            }
-            _ => String::new(),
+            Expr::ListLit(items) => Val::List(items.iter().map(|i| eval(i, env)).collect()),
+            _ => Val::Nil,
         }
     }
 
-    fn exec_stmts(stmts: &[Stmt], vars: &mut std::collections::HashMap<String, String>) {
-        for stmt in stmts {
-            exec_stmt(stmt, vars);
-        }
+    fn exec(stmts: &[Stmt], env: &mut Env) -> bool {
+        for s in stmts { if run_stmt(s, env) { return true; } }
+        false
     }
 
-    fn exec_stmt(stmt: &Stmt, vars: &mut std::collections::HashMap<String, String>) {
+    fn run_stmt(stmt: &Stmt, env: &mut Env) -> bool {
         match stmt {
             Stmt::Let { name, value, .. } => {
-                let val = value.as_ref()
-                    .map(|e| eval_expr(e, vars))
-                    .unwrap_or_default();
-                vars.insert(name.clone(), val);
+                let v = value.as_ref().map(|e| eval(e, env)).unwrap_or(Val::Nil);
+                env.def(name, v); false
             }
-            Stmt::ExprStmt(expr) => {
-                eval_expr(expr, vars);
+            Stmt::Assign { name, value } => {
+                let v = eval(value, env);
+                env.set(name, v); false
             }
+            Stmt::ExprStmt(expr) => { eval(expr, env); false }
             Stmt::If { cond, body, elif_branches, else_body } => {
-                let cv = eval_expr(cond, vars);
-                let is_true = cv == "true" || (cv.parse::<f64>().unwrap_or(0.0) != 0.0);
-                if is_true {
-                    exec_stmts(body, vars);
-                } else {
-                    let mut done = false;
-                    for (ec, eb) in elif_branches {
-                        let ecv = eval_expr(ec, vars);
-                        if ecv == "true" {
-                            exec_stmts(eb, vars);
-                            done = true;
-                            break;
-                        }
-                    }
-                    if !done {
-                        if let Some(eb) = else_body {
-                            exec_stmts(eb, vars);
-                        }
+                if eval(cond, env).truthy() {
+                    env.push(); let b=exec(body, env); env.pop(); return b;
+                }
+                for (ec, eb) in elif_branches {
+                    if eval(ec, env).truthy() {
+                        env.push(); let b=exec(eb, env); env.pop(); return b;
                     }
                 }
+                if let Some(eb) = else_body { env.push(); let b=exec(eb, env); env.pop(); return b; }
+                false
             }
             Stmt::While { cond, body } => {
                 loop {
-                    let cv = eval_expr(cond, vars);
-                    if cv != "true" && cv.parse::<f64>().unwrap_or(0.0) == 0.0 { break; }
-                    exec_stmts(body, vars);
+                    if !eval(cond, env).truthy() { break; }
+                    env.push(); let brk=exec(body, env); env.pop();
+                    if brk { break; }
                 }
+                false
+            }
+            Stmt::Loop { body } => {
+                loop { env.push(); let brk=exec(body, env); env.pop(); if brk { break; } }
+                false
             }
             Stmt::Each { var, iter, body } => {
-                let iter_val = eval_expr(iter, vars);
-                // Simple range: parse [1, 2, 3] or DotDot range
-                let items: Vec<String> = if iter_val.starts_with('[') {
-                    iter_val.trim_matches(|c| c == '[' || c == ']')
-                        .split(", ")
-                        .map(|s| s.trim().to_string())
-                        .filter(|s| !s.is_empty())
-                        .collect()
-                } else {
-                    vec![iter_val]
+                let items = match eval(iter, env) {
+                    Val::List(l) => l,
+                    other => vec![other],
                 };
                 for item in items {
-                    vars.insert(var.clone(), item);
-                    exec_stmts(body, vars);
+                    env.set(var, item);
+                    env.push(); let brk=exec(body, env); env.pop();
+                    if brk { break; }
                 }
+                false
             }
-            Stmt::Give(_) | Stmt::Break | Stmt::Skip => {}
-            Stmt::Use { .. } => {}
-            Stmt::Fn { .. } => {}
-            Stmt::Class { .. } => {}
-            _ => {}
+            Stmt::Break => true,
+            Stmt::Give(_) | Stmt::Skip => false,
+            Stmt::Use { .. } | Stmt::Fn { .. } | Stmt::Class { .. } => false,
+            _ => false,
         }
     }
 
-    exec_stmts(&program.stmts, &mut vars);
+    let mut env = Env::new();
+    exec(&program.stmts, &mut env);
 }
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
-
-    if args.len() >= 3 && args[1] == "run" {
-        run_file(&args[2]);
-        return;
-    }
-
-    if args.len() >= 2 && args[1] == "--version" {
-        println!("M0RX Compiler v0.1.0");
-        return;
-    }
-
-    // Default demo
+    if args.len() >= 3 && args[1] == "run" { run_file(&args[2]); return; }
+    if args.len() >= 2 && args[1] == "--version" { println!("M0RX Compiler v0.1.0"); return; }
     println!("M0RX Compiler v0.1.0");
     println!("Usage: morxc run <file.mrx>");
-    println!("       morxc --version");
-    println!("");
-    println!("Example:");
-    println!("  echo 'showln(\"Hello M0RX!\")' > hello.mrx");
-    println!("  morxc run hello.mrx");
 }
